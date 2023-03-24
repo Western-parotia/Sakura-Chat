@@ -2,10 +2,12 @@ package com.sakura.chat.v2.business.main.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.sakura.chat.v2.Keys
 import com.sakura.chat.v2.base.net.AllNetLoadingHandler
 import com.sakura.chat.v2.base.net.BaseViewModel
 import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatReq
+import com.sakura.chat.v2.ext.smartPost
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -38,9 +40,12 @@ class ChatViewModel : BaseViewModel() {
 
     fun sendMessageWithText(text: String) {
         netLaunch("sendMessageWithText") {
+            _newMessage.smartPost(ChatMessage("user", text))
             talkToGPT(text)
         }.start(AllNetLoadingHandler())
     }
+
+    fun getDefChatMessages() = Keys.SP.chatData.spValue
 
     private suspend fun talkToGPT(text: String) {
         val chatReq = ChatReq(packageNewMessageList(text))
@@ -48,7 +53,7 @@ class ChatViewModel : BaseViewModel() {
         val chatRes = withBusiness {
             gptApiService.goTalkToGPT(chatReq)
         }
-        _newMessage.value = chatRes.choices[0].message
+        _newMessage.smartPost(chatRes.choices[0].message)
     }
 
 
