@@ -12,7 +12,7 @@ open class ResException(
     val netCode: Int = 200,
     cause: Throwable? = null
 ) :
-    Throwable("xpx:$msg:$code:$netCode", cause) {
+    Throwable("chat:$msg:$code:$netCode", cause) {
 
     companion object {
         const val UNKNOW = "-10000"

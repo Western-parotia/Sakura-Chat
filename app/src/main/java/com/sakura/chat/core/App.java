@@ -5,6 +5,8 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.foundation.service.sp.MjSpUtils;
+import com.foundation.widget.utils.MjUtils;
 
 /**
  * Created by victor on 2020/9/10.
@@ -19,6 +21,8 @@ public class App extends ArchApplication {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         instance = this;
+        MjSpUtils.init(this);
+        MjUtils.INSTANCE.init(this);
     }
 
     /**

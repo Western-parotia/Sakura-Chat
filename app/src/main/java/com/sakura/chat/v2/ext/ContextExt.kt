@@ -5,14 +5,6 @@ import android.content.Context
 import android.content.Intent
 import com.sakura.chat.core.ArchConfig
 
-/**
- * @author LJF
- * @Email lijiefeng@51xpx.com
- * @Time  2021/10/29 0029
- * @Description Context扩展
- */
-
-
 fun Context.safetyStartActivity(intent: Intent) {
     try {
         startActivity(intent)
