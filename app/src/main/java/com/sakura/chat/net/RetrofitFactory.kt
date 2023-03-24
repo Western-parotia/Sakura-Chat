@@ -15,6 +15,7 @@ object RetrofitFactory {
 
     fun create(): Retrofit {
         okHttpClientBuilder.addDynamicDomainSkill()
+        okHttpClientBuilder.addInterceptor(TokenInterceptor())
         okHttpClientBuilder.addInterceptor(LoggerInterceptor(ArchConfig.debug, true))
         val okHttpClient = okHttpClientBuilder.build()
         return Retrofit.Builder()
