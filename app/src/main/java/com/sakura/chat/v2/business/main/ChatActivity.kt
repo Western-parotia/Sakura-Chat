@@ -3,6 +3,7 @@ package com.sakura.chat.v2.business.main
 import android.Manifest
 import android.os.Bundle
 import androidx.core.view.isVisible
+import com.foundation.app.arc.utils.param.BundleParams
 import com.foundation.service.permission.PermissionBox
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
@@ -14,8 +15,9 @@ import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatBinding
 import com.sakura.chat.utils.AudioRecorder
 import com.sakura.chat.v2.base.component.BaseActivityV2
-import com.sakura.chat.v2.business.main.data.ChatMessage
+import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
+import com.sakura.chat.v2.ext.notifyListItemChanged
 import com.sakura.chat.v2.ext.toColorInt
 import com.sakura.chat.v2.ext.toast
 import java.io.File
@@ -31,16 +33,31 @@ class ChatActivity : BaseActivityV2() {
 
     private var isEdit = true
 
+    @BundleParams("chatId")
+    private val id = 0L
+
     override fun bindData() {
         vm.newMessage.observe(this) {
             adapter.addData(it)
+        }
+
+        vm.replaceMessage.observe(this) {
+            val old = it.first
+            val new = it.second
+            adapter.data.forEachIndexed { index, data ->
+                if (data == old) {
+                    adapter.data[index] = new
+                    adapter.notifyListItemChanged(index)
+                    return@observe
+                }
+            }
         }
     }
 
     override fun getContentVB() = vb
 
     override fun init(savedInstanceState: Bundle?) {
-        adapter.setNewData(ArrayList(vm.getDefChatMessages()))
+        vm.initDefMessages(id)
         vb.rvList.adapter = adapter
 
         vb.ivChangeState.setOnShakeLessClickListener {
@@ -81,14 +98,14 @@ class ChatActivity : BaseActivityV2() {
                     return@setOnShakeLessClickListener
                 }
                 vb.etText.setText("")
-                vm.sendMessageWithText(st)
+                vm.sendMessageWithText(id, st)
                 toUIContext().hideKeyboard()
             } else {
                 val r = recorder
                 stopRecorder()
                 if (r?.state == 2) {
                     val file = r.fileDir
-                    vm.sendMessageWithVoice(File(file))
+                    vm.sendMessageWithVoice(id, File(file))
                 } else {
                     "请先开始录音".toast()
                 }
@@ -113,11 +130,11 @@ class ChatActivity : BaseActivityV2() {
         }
     }
 
-    class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessage>() {
+    class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
         override fun convertVB(
             holder: ViewBindingViewHolder<AdapterChatBinding>,
             vb: AdapterChatBinding,
-            item: ChatMessage
+            item: ChatMessageHistory
         ) {
             super.convertVB(holder, vb, item)
             if (item.role == "user") {

@@ -6,7 +6,9 @@ import com.sakura.chat.v2.Keys
 import com.sakura.chat.v2.base.net.AllNetLoadingHandler
 import com.sakura.chat.v2.base.net.BaseViewModel
 import com.sakura.chat.v2.business.main.data.ChatMessage
+import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.data.ChatReq
+import com.sakura.chat.v2.ext.removeIfIterator
 import com.sakura.chat.v2.ext.smartPost
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -14,11 +16,19 @@ import okhttp3.RequestBody
 import java.io.File
 
 class ChatViewModel : BaseViewModel() {
-    private val _newMessage = MutableLiveData<ChatMessage>()
-    val newMessage: LiveData<ChatMessage> = _newMessage
+    private val _newMessage = MutableLiveData<List<ChatMessageHistory>>()
+    val newMessage: LiveData<List<ChatMessageHistory>> = _newMessage
+
+    /**
+     * 数据发生变更
+     * 第一个：源数据
+     * 第二个：新数据
+     */
+    private val _replaceMessage = MutableLiveData<Pair<ChatMessageHistory, ChatMessageHistory>>()
+    val replaceMessage: LiveData<Pair<ChatMessageHistory, ChatMessageHistory>> = _replaceMessage
 
 
-    fun sendMessageWithVoice(file: File) {
+    fun sendMessageWithVoice(chatId: Long, file: File) {
 
         val handler = AllNetLoadingHandler()
         if (!file.exists() || file.length() <= 0) {
@@ -34,36 +44,51 @@ class ChatViewModel : BaseViewModel() {
             val voiceText = withBusiness {
                 gptApiService.translationsVoice(filePart, model)
             }.text
-            talkToGPT(voiceText)
+            talkToGPT(chatId, voiceText)
         }.start(handler)
     }
 
-    fun sendMessageWithText(text: String) {
+    fun sendMessageWithText(chatId: Long, text: String) {
         netLaunch("sendMessageWithText") {
-            _newMessage.smartPost(ChatMessage("user", text))
-            talkToGPT(text)
+            talkToGPT(chatId, text)
         }.start(AllNetLoadingHandler())
     }
 
-    fun getDefChatMessages() = Keys.SP.chatData.spValue
+    fun initDefMessages(chatId: Long) {
+        _newMessage.smartPost(Keys.SP.getChatMessages(chatId))
+    }
 
-    private suspend fun talkToGPT(text: String) {
-        val chatReq = ChatReq(packageNewMessageList(text))
+    private suspend fun talkToGPT(chatId: Long, text: String) {
+        val oldText = ChatMessageHistory("user", text, false)
+        _newMessage.smartPost(listOf(oldText))
+        val chatMessages = Keys.SP.getChatMessages(chatId).toMutableList()
+        chatMessages.add(oldText)
+        val chatReq = ChatReq(
+            packageNewMessageList() + chatMessages.map { ChatMessage(it.role, it.content) }
+        )
 
         val chatRes = withBusiness {
             gptApiService.goTalkToGPT(chatReq)
         }
-        _newMessage.smartPost(chatRes.choices[0].message)
+        val msg = chatRes.choices[0].message
+        val newText = oldText.copy(isSuccess = true)
+        val result = ChatMessageHistory(msg.role, msg.content, false)
+        _replaceMessage.smartPost(oldText to newText)
+        _newMessage.smartPost(listOf(result))
+
+        chatMessages.removeIfIterator { it === oldText }
+        chatMessages.add(newText)
+        chatMessages.add(result)
+        Keys.SP.saveChatMessages(chatId, chatMessages)
     }
 
 
-    private fun packageNewMessageList(newMessage: String): List<ChatMessage> {
+    private fun packageNewMessageList(): List<ChatMessage> {
         return arrayListOf(
             ChatMessage("user", "你好，我是Sakura,你喜欢蓝色吗"),
             ChatMessage("assistant", "Hi Sakura,我喜欢蓝色"),
             ChatMessage("user", "那你喜欢绿色吗？"),
             ChatMessage("assistant", "我不喜欢"),
-            ChatMessage("user", newMessage),
         )
     }
 

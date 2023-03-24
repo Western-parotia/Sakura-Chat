@@ -13,3 +13,9 @@ package com.sakura.chat.v2.business.main.data
 data class ChatReq(val messages: List<ChatMessage>, val model: String = "gpt-3.5-turbo")
 
 data class ChatMessage(val role: String = "", val content: String = "")
+
+/**
+ * 保存的消息记录
+ * @param isSuccess 是否发送成功
+ */
+data class ChatMessageHistory(val role: String, val content: String, val isSuccess: Boolean)

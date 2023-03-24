@@ -24,7 +24,9 @@ class MainActivity : BaseActivityV2() {
 //
 //
 //        }
-        jumpToActivity<ChatActivity>()
+        jumpToActivity<ChatActivity> {
+            putExtra("id", /*Keys.SP.newChatId()*/1L)
+        }
         finish()
     }
 }
