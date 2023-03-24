@@ -7,8 +7,9 @@
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
     <color name="color_FFFFFF">#FFFFFF</color>
-    <color name="color_f0f0f0">#f0f0f0</color>
     <color name="color_999999">#999999</color>
+    <color name="color_dddddd">#dddddd</color>
+    <color name="color_f0f0f0">#f0f0f0</color>
     <color name="color_00ff00">#00ff00</color>
     <color name="color_ffff00">#ffff00</color>
 </resources>

@@ -80,6 +80,7 @@ class ChatActivity : BaseActivityV2() {
                     return@setOnShakeLessClickListener
                 }
                 vb.etText.setText("")
+                adapter.addData(ChatMessage("user", st))
                 vm.sendMessageWithText(st)
                 toUIContext().hideKeyboard()
             } else {
@@ -120,11 +121,11 @@ class ChatActivity : BaseActivityV2() {
         ) {
             super.convertVB(holder, vb, item)
             if (item.role == "user") {
-                vb.tvMsg.text = "您：$item"
+                vb.tvMsg.text = "您：${item.content}"
                 vb.llRoot.setBackgroundColor(R.color.color_f0f0f0.toColorInt)
             } else {
-                vb.tvMsg.text = "ChatGPT：$item"
-                vb.llRoot.setBackgroundColor(R.color.color_999999.toColorInt)
+                vb.tvMsg.text = "ChatGPT：${item.content}"
+                vb.llRoot.setBackgroundColor(R.color.color_dddddd.toColorInt)
             }
         }
     }
