@@ -14,7 +14,7 @@ import retrofit2.Response
  * create by zhusw on 6/9/21 14:11
  */
 open class BaseViewModel : NetViewModel() {
-    protected val apiService = NetManager.getApiService(GPTAPIService::class.java)
+    protected val gptApiService = NetManager.getApiService(GPTAPIService::class.java)
 
     protected val _initLoadingLiveData = MutableLiveData<LoadingProgress>()
     val initLoadingLiveData: LiveData<LoadingProgress> = _initLoadingLiveData

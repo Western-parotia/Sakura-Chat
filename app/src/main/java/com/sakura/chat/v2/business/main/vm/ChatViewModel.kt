@@ -10,7 +10,7 @@ import okhttp3.MediaType
 import okhttp3.RequestBody
 import java.io.File
 
-class OpenAIViewModel : BaseViewModel() {
+class ChatViewModel : BaseViewModel() {
     private val _newMessage = MutableLiveData<ChatMessage>()
     val newMessage: LiveData<ChatMessage> = _newMessage
 
@@ -26,7 +26,7 @@ class OpenAIViewModel : BaseViewModel() {
         netLaunch("sendMessageWithVoice") {
             val body = RequestBody.create(MediaType.parse("multipart/form-data"), file)
             val voiceText = withBusiness {
-                apiService.translationsVoice(body)
+                gptApiService.translationsVoice(body)
             }.text
             talkToGPT(voiceText)
         }.start(handler)
@@ -42,7 +42,7 @@ class OpenAIViewModel : BaseViewModel() {
         val chatReq = ChatReq(packageNewMessageList(text))
 
         val chatRes = withBusiness {
-            apiService.goTalkToGPT(chatReq)
+            gptApiService.goTalkToGPT(chatReq)
         }
         _newMessage.value = chatRes.choices[0].message
     }

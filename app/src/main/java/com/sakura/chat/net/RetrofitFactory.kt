@@ -8,12 +8,9 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
-    private val okHttpClientBuilder: OkHttpClient.Builder
-        get() {
-            return OkHttpClient.Builder()
-        }
 
     fun create(): Retrofit {
+        val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         okHttpClientBuilder.addDynamicDomainSkill()
         okHttpClientBuilder.addInterceptor(TokenInterceptor())
         okHttpClientBuilder.addInterceptor(LoggerInterceptor(ArchConfig.debug, true))
