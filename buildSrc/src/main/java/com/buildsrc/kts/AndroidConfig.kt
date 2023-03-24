@@ -6,7 +6,7 @@ object AndroidConfig {
     private val gradleProperties = PropertiesUtils.gradleProperties
 
     const val compileSdkVersion = 31
-    const val minSdkVersion = 21
+    const val minSdkVersion = 24
     const val targetSdkVersion = 31
 
 

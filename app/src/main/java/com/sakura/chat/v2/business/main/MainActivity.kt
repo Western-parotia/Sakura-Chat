@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.viewbinding.ViewBinding
 import com.sakura.chat.databinding.ActMainBinding
 import com.sakura.chat.v2.base.component.BaseActivityV2
-import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.jumpToActivity
 
 class MainActivity : BaseActivityV2() {
@@ -26,5 +25,6 @@ class MainActivity : BaseActivityV2() {
 //
 //        }
         jumpToActivity<ChatActivity>()
+        finish()
     }
 }
