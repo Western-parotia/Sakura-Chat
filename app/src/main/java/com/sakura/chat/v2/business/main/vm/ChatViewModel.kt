@@ -17,6 +17,7 @@ class ChatViewModel : BaseViewModel() {
 
 
     fun sendMessageWithVoice(file: File) {
+
         val handler = AllNetLoadingHandler()
         if (!file.exists() || file.length() <= 0) {
             return handler.onFailure(
@@ -27,8 +28,9 @@ class ChatViewModel : BaseViewModel() {
         netLaunch("sendMessageWithVoice") {
             val body = RequestBody.create(MediaType.parse("multipart/form-data"), file)
             val filePart = MultipartBody.Part.createFormData("file", file.name, body)
+            val model = MultipartBody.Part.createFormData("model", "whisper-1")
             val voiceText = withBusiness {
-                gptApiService.translationsVoice(filePart)
+                gptApiService.translationsVoice(filePart, model)
             }.text
             talkToGPT(voiceText)
         }.start(handler)

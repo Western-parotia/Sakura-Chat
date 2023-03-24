@@ -13,8 +13,8 @@ interface GPTAPIService {
     @Multipart
     @POST("/v1/audio/translations")
     suspend fun translationsVoice(
-        @Part("file") filePart: MultipartBody.Part,
-        @Part model: String = "whisper-1"
+        @Part filePart: MultipartBody.Part,
+        @Part model: MultipartBody.Part
     ): Response<VoiceRes>
 
     @Headers("Content-Type: application/json")
