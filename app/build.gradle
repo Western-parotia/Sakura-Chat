@@ -171,8 +171,6 @@ dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 
     implementation project(path: ':architecture')
-    debugImplementation project(':debugModule')
-    debugProguardImplementation project(':debugModule')
 
     implementation Dependencies.AndroidX.appcompat
     implementation Dependencies.OpenSourceLibrary.junit

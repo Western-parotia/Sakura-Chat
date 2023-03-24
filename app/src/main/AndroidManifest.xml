@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.nmm.chart"
+    package="com.sakura.chart"
     tools:ignore="ProtectedPermissions">
 
     <!-- 必选 -->
@@ -81,9 +81,9 @@
 
     <!--requestLegacyExternalStorage不要删，在Android10及一下有此标签才能直接读File-->
     <application
-        android:name="com.nmm.chart.core.App"
+        android:name="com.sakura.chart.core.App"
         android:allowBackup="false"
-        android:appComponentFactory="com.nmm.chat"
+        android:appComponentFactory="com.sakura.chat"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
