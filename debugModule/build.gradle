@@ -1,0 +1,48 @@
+import com.buildsrc.kts.AndroidConfig
+import com.buildsrc.kts.Dependencies
+
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdkVersion AndroidConfig.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion AndroidConfig.minSdkVersion
+        targetSdkVersion AndroidConfig.targetSdkVersion
+    }
+
+    buildTypes {
+        debugProguard {
+            initWith(debug)
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+        //为java继承的kotlin interface default方法添加实现
+        freeCompilerArgs += ["-Xjvm-default=all-compatibility"]
+    }
+    buildFeatures {
+        viewBinding = true
+    }
+}
+
+dependencies {
+    implementation project(':architecture')
+    implementation Dependencies.AndroidX.appcompat
+    implementation(Dependencies.Foundation.debugDialog)
+    implementation(Dependencies.Foundation.debugHandler)
+    implementation(Dependencies.OpenSourceLibrary.flex_box)
+    implementation(Dependencies.Foundation.json)
+    implementation(Dependencies.Foundation.sp)
+    implementation(Dependencies.Foundation.shape)
+    implementation(Dependencies.Foundation.loggerInterceptor)
+    implementation(Dependencies.Foundation.recyclerviewAdapter)
+    implementation (Dependencies.OpenSourceLibrary.glide)
+}

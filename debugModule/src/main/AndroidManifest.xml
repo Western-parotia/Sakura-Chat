@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mj.debug">
+
+    <application>
+        <provider
+            android:name=".DebugProvider"
+            android:authorities="${applicationId}.debug"
+            android:exported="false" />
+    </application>
+</manifest>

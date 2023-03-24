@@ -1,0 +1,9 @@
+include ':app'
+include ':architecture'
+include ':debugModule'
+
+//setBinding(new Binding([gradle: this]))
+//evaluate(new File('/Volumes/D/mjProject/FlutterProject/flutter-xpx/.android/include_flutter.groovy'))
+//
+//include ':flutter-xpx'
+//project(':flutter-xpx').projectDir = new File('../../FlutterProject/flutter-xpx')

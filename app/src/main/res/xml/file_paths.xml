@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <!--/storage/emulated/0/xpx-->
+        <external-path
+            name="xpx_extra_path"
+            path="xpx" />
+        <!--/storage/emulated/0/xpx-->
+        <files-path
+            name="xpx_private_path"
+            path="xpx" />
+        <root-path
+            name="root_path"
+            path="." />
+    </paths>
+</resources>
