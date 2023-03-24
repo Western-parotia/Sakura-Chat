@@ -11,7 +11,7 @@
         <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Small</item>
         <item name="android:windowBackground">@color/color_FFFFFF</item>
         <!--        状态栏白色-->
-        <item name="android:statusBarColor">@color/color_FFFFFF</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
         <!--        状态栏字体黑色-->
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowNoTitle">true</item>

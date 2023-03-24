@@ -43,7 +43,7 @@ class ChatActivity : BaseActivityV2() {
         adapter.setNewData(ArrayList(vm.getDefChatMessages()))
         vb.rvList.adapter = adapter
 
-        vb.tvChangeState.setOnShakeLessClickListener {
+        vb.ivChangeState.setOnShakeLessClickListener {
             PermissionBox.with(this)
                 .setMajorPermission(Manifest.permission.RECORD_AUDIO)
                 .startRequest {
@@ -100,13 +100,13 @@ class ChatActivity : BaseActivityV2() {
     private fun changeState() {
         isEdit = !isEdit
         if (isEdit) {
-            vb.tvChangeState.text = "语音"
+            vb.ivChangeState.setImageResource(R.mipmap.ic_voice_light)
             vb.etText.isVisible = true
             vb.tvStartEnd.isVisible = false
             vb.tvCancelAudio.isVisible = false
             stopRecorder()
         } else {
-            vb.tvChangeState.text = "文本"
+            vb.ivChangeState.setImageResource(R.mipmap.ic_voice_dark)
             vb.etText.isVisible = false
             vb.tvStartEnd.isVisible = true
             vb.tvCancelAudio.isVisible = true

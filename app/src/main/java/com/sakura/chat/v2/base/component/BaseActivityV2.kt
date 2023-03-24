@@ -7,6 +7,7 @@ import com.foundation.app.arc.activity.BaseFragmentManagerActivity
 import com.foundation.widget.loading.IPageLoading
 import com.foundation.widget.loading.PageLoadingAdapter
 import com.foundation.widget.utils.other.MjPage
+import com.foundation.widget.utils.other.StatusBarUtils
 import com.sakura.chat.v2.base.loading.LoadingEventHelper
 import com.sakura.chat.v2.base.loading.LoadingProgress
 import com.sakura.chat.v2.base.loading.NormalLoadingAdapter
@@ -41,6 +42,8 @@ abstract class BaseActivityV2 : BaseFragmentManagerActivity() {
         if (window.attributes.softInputMode <= 0) { //没有就默认隐藏键盘,有就跳过
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         }
+        StatusBarUtils.switchStatusBarTextColor(this, false)
+
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
