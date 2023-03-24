@@ -64,8 +64,14 @@ class ChatViewModel : BaseViewModel() {
         val chatMessages = Keys.SP.getChatMessages(chatId).toMutableList()
         chatMessages.add(oldText)
         val chatReq = ChatReq(
-            packageNewMessageList() + chatMessages.map { ChatMessage(it.role, it.content) }
+            packageNewMessageList() + chatMessages.mapNotNull {
+                if (it.isSuccess) ChatMessage(
+                    it.role,
+                    it.content
+                ) else null
+            }
         )
+        Keys.SP.saveChatMessages(chatId, chatMessages)
 
         val chatRes = withBusiness {
             gptApiService.goTalkToGPT(chatReq)
