@@ -17,7 +17,7 @@ class AudioRecorder {
         if (!it.exists()) {
             it.mkdirs()
         }
-        "${it.absolutePath}/${System.currentTimeMillis()}.mp3"
+        "${it.absolutePath}/${System.currentTimeMillis()}.mp4"
     }
 
     init {
