@@ -27,6 +27,6 @@ fun WebView.refreshTitle(callback: (title: String) -> Unit) {
 
 private fun String.log(secondTag: String) {
     if (BuildConfig.DEBUG) {
-        Log.i("xpxLog", "$secondTag $this")
+        Log.i("chatLog", "$secondTag $this")
     }
 }
