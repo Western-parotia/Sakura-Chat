@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
 import com.foundation.app.arc.utils.ext.lazyAtomic
+import com.foundation.service.net.NetManager
+import com.sakura.chat.BuildConfig
+import com.sakura.chat.net.RetrofitFactory
 
 /**
  * create by zhusw on 6/7/21 14:16
@@ -26,6 +29,8 @@ open class ArchApplication : Application(), ViewModelStoreOwner {
         super.onCreate()
         //ArchConfig 需要晚于Utils 初始化
         ArchConfig.initApplicationOnCreate()
+        NetManager.init(RetrofitFactory.create(), this, BuildConfig.DEBUG)
+
     }
 
     override fun startActivity(intent: Intent) {

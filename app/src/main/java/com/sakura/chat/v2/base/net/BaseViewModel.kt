@@ -2,20 +2,20 @@ package com.sakura.chat.v2.base.net
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.foundation.service.net.NetManager
 import com.foundation.service.net.NetViewModel
-import com.foundation.service.net.state.NetStateListener
 import com.foundation.widget.utils.other.MjPage
 import com.sakura.chat.v2.base.loading.LoadingAction
 import com.sakura.chat.v2.base.loading.LoadingControl
 import com.sakura.chat.v2.base.loading.LoadingProgress
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
 import retrofit2.Response
 
 /**
  * create by zhusw on 6/9/21 14:11
  */
 open class BaseViewModel : NetViewModel() {
+    protected val apiService = NetManager.getApiService(ApiService::class.java)
+
     protected val _initLoadingLiveData = MutableLiveData<LoadingProgress>()
     val initLoadingLiveData: LiveData<LoadingProgress> = _initLoadingLiveData
 
@@ -24,9 +24,6 @@ open class BaseViewModel : NetViewModel() {
 
     protected val _loadMoreLoadingLiveData = MutableLiveData<LoadingProgress>()
     val loadMoreLoadingLiveData: LiveData<LoadingProgress> = _loadMoreLoadingLiveData
-
-    protected val apiService get() = ApiService.apiService
-
 
     protected fun factoryLoadingControl(loadingAction: LoadingAction): LoadingControl {
         val liveData = when (loadingAction) {
@@ -95,27 +92,4 @@ open class BaseViewModel : NetViewModel() {
         return NetDataFilter.withBusiness(block)
     }
 
-
-    @Deprecated(
-        level = DeprecationLevel.WARNING, message = "替换为 NetViewModel.netLaunch()",
-        replaceWith = ReplaceWith("netLaunch(tag, block).start(listener)")
-    )
-    fun netLaunch(
-        listener: NetStateListener?,
-        tag: String,
-        block: suspend CoroutineScope.() -> Unit
-    ): Job =
-        netLaunch(tag, block).start(listener)
-
-    @Deprecated(
-        level = DeprecationLevel.WARNING, message = "替换为 NetViewModel.netLaunch()",
-        replaceWith = ReplaceWith("netLaunch(tag, block).start(listener)")
-    )
-    fun netLaunch(
-        block: suspend CoroutineScope.() -> Unit,
-        listener: NetStateListener?,
-        tag: String
-    ) {
-        netLaunch(listener, tag, block)
-    }
 }

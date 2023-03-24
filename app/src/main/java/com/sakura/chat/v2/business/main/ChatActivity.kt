@@ -16,7 +16,7 @@ class ChatActivity : BaseActivityV2() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        vb.rvList.adapter = adapter
+//        vb.rvList.adapter = adapter
     }
 
     class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, String>() {

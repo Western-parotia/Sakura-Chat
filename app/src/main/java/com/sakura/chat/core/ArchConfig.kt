@@ -20,35 +20,6 @@ object ArchConfig {
     val app: Application
         get() = _application!!
 
-    @JvmStatic
-    var versionName: String = ""
-        private set
-        get() {
-            if (field.isEmpty()) {
-                field = getHostVersionName()
-            }
-            return field
-        }
-
-    @JvmStatic
-    var versionCode: Long = 0L
-        private set
-        get() {
-            if (field == 0L) {
-                field = getHostVersionCode()
-            }
-            return field
-        }
-
-    @JvmStatic
-    val packageName: String
-        get() = app.packageName
-
-    /**
-     * 构建类型字符串：release、debug、debugProguard...
-     */
-    const val buildType: String = BuildConfig.BUILD_TYPE
-
     /**
      * 预初始化，Application构造调用，这样可以保证任何情况都不为null（[ContentProvider]）
      */

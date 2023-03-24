@@ -1,23 +1,15 @@
 package com.sakura.chat.v2.base.net
 
-import com.sakura.chat.core.ApiManager
+import okhttp3.MultipartBody
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
-    companion object {
-        @JvmField
-        val apiService: ApiService =
-            ApiManager.getSingleton().getService(ApiService::class.java)
-    }
-
-    @GET("111")
-    suspend fun getAuthCode(
-        @Query("cmd") cmd: String,
-        @Query("phone") phone: String,
-        @Query("purpose") purpose: String,
-        @Query("distinct_id") distinct_id: String
+    @Multipart
+    @POST("/v1/audio/translations")
+    suspend fun translationsVoice(
+        @Part model: String,
+        @Part voiceFile: MultipartBody.Part
     ): Response<String>
 }
