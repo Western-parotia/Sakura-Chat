@@ -17,12 +17,12 @@ class AudioRecorder {
         if (!it.exists()) {
             it.mkdirs()
         }
-        "${it.absolutePath}/${System.currentTimeMillis()}.3gp"
+        "${it.absolutePath}/${System.currentTimeMillis()}.wav"
     }
 
     init {
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC)
-        recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+        recorder.setOutputFormat(MediaRecorder.OutputFormat.WEBM)
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
         recorder.setOutputFile(fileDir)
         recorder.prepare()

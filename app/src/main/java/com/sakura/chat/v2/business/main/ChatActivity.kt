@@ -40,6 +40,7 @@ class ChatActivity : BaseActivityV2() {
     override fun getContentVB() = vb
 
     override fun init(savedInstanceState: Bundle?) {
+        adapter.setNewData(ArrayList(vm.getDefChatMessages()))
         vb.rvList.adapter = adapter
 
         vb.tvChangeState.setOnShakeLessClickListener {
@@ -80,7 +81,6 @@ class ChatActivity : BaseActivityV2() {
                     return@setOnShakeLessClickListener
                 }
                 vb.etText.setText("")
-                adapter.addData(ChatMessage("user", st))
                 vm.sendMessageWithText(st)
                 toUIContext().hideKeyboard()
             } else {
