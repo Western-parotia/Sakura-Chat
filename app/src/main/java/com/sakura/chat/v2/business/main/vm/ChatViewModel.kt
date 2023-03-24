@@ -7,6 +7,7 @@ import com.sakura.chat.v2.base.net.BaseViewModel
 import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatReq
 import okhttp3.MediaType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
 
@@ -25,8 +26,9 @@ class ChatViewModel : BaseViewModel() {
         }
         netLaunch("sendMessageWithVoice") {
             val body = RequestBody.create(MediaType.parse("multipart/form-data"), file)
+            val filePart = MultipartBody.Part.createFormData("file", file.name, body)
             val voiceText = withBusiness {
-                gptApiService.translationsVoice(body)
+                gptApiService.translationsVoice(filePart)
             }.text
             talkToGPT(voiceText)
         }.start(handler)
