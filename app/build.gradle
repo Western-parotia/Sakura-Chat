@@ -170,8 +170,6 @@ android.applicationVariants.all { variant ->
 dependencies {
     implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 
-    implementation project(path: ':architecture')
-
     implementation Dependencies.AndroidX.appcompat
     implementation Dependencies.OpenSourceLibrary.junit
 
@@ -213,4 +211,8 @@ dependencies {
 
     implementation Dependencies.Foundation.web
     implementation Dependencies.Foundation.utils
+    api Dependencies.AndroidX.core_ktx
+    api Dependencies.OpenSourceLibrary.unpeekLiveData
+    api Dependencies.Foundation.activityFragment
+    api Dependencies.Foundation.net
 }

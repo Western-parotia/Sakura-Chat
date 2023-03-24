@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.sakura.chart"
+    package="com.sakura.chat"
     tools:ignore="ProtectedPermissions">
 
     <!-- 必选 -->
@@ -81,7 +81,7 @@
 
     <!--requestLegacyExternalStorage不要删，在Android10及一下有此标签才能直接读File-->
     <application
-        android:name="com.sakura.chart.core.App"
+        android:name="com.sakura.chat.core.App"
         android:allowBackup="false"
         android:appComponentFactory="com.sakura.chat"
         android:icon="@mipmap/ic_launcher"
@@ -94,7 +94,7 @@
         tools:replace="android:appComponentFactory,android:allowBackup">
 
         <activity
-            android:name=".v2.business.main.MainActivity"
+            android:name="com.sakura.chat.v2.business.main.MainActivity"
             android:exported="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
@@ -108,7 +108,7 @@
         </activity>
 
         <activity
-            android:name=".v2.business.main.ChatActivity"
+            android:name="com.sakura.chat.v2.business.main.ChatActivity"
             android:screenOrientation="portrait" />
     </application>
 
