@@ -20,7 +20,7 @@ object AndroidConfig {
         @JvmStatic
         val applicationId = gradleProperties["app.id"].toString()
 
-        const val appName = "小胖熊"
+        const val appName = "Sakura"
 
         @JvmStatic
         val releaseObfuscate = gradleProperties["switch.release.obfuscate"].toString().toBoolean()
