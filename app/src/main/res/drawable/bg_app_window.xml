@@ -8,5 +8,5 @@
         android:gravity="bottom|center_horizontal"
         android:bottom="@dimen/dp_100"
         android:width="@dimen/dp_80"
-        android:height="@dimen/dp_80"></item>
+        android:height="@dimen/dp_80" />
 </layer-list>
