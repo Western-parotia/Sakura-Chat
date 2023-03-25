@@ -31,7 +31,10 @@ fun View.animateRotateLoop(
     duration: Long,
     start: Boolean = true
 ): Animation {
-    val animation = RotateAnimation(fromDegrees, toDegrees, 0.5F, 0.5F)
+    val animation = RotateAnimation(
+        fromDegrees, toDegrees, Animation.RELATIVE_TO_SELF,
+        0.5F, Animation.RELATIVE_TO_SELF, 0.5F
+    )
     animation.repeatCount = ScaleAnimation.INFINITE
     animation.duration = duration
     animation.repeatMode = ScaleAnimation.INFINITE

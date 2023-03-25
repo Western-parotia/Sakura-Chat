@@ -137,7 +137,7 @@ class ChatViewModel : BaseViewModel() {
         _newMessage.smartPost(
             listOf(
                 ChatMessageHistory(
-                    role, "",
+                    role, "。。。",
                     true, isFresh = false
                 )
             )

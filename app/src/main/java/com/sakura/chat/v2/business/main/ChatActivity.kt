@@ -5,8 +5,6 @@ import android.os.Bundle
 import androidx.core.view.isVisible
 import com.foundation.app.arc.utils.param.BundleParams
 import com.foundation.service.permission.PermissionBox
-import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
-import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
 import com.foundation.widget.utils.ext.view.hideKeyboard
 import com.foundation.widget.utils.ext.view.jumpToActivity
 import com.foundation.widget.utils.ext.view.setOnShakeLessClickListener
@@ -14,12 +12,10 @@ import com.foundation.widget.utils.ext.view.toUIContext
 import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.R
 import com.sakura.chat.databinding.ActChatBinding
-import com.sakura.chat.databinding.AdapterChatBinding
 import com.sakura.chat.utils.AudioRecorder
 import com.sakura.chat.v2.base.component.BaseActivityV2
-import com.sakura.chat.v2.business.main.adapter.ChatListAdapter
+import com.sakura.chat.v2.business.main.adapter.ChatDetailAdapter
 import com.sakura.chat.v2.business.main.data.ChatMessage
-import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.notifyListItemChanged
 import com.sakura.chat.v2.ext.toast
@@ -36,7 +32,7 @@ class ChatActivity : BaseActivityV2() {
     }
 
     private val vb by lazyVB<ActChatBinding>()
-    private val adapter = ChatListAdapter()
+    private val adapter = ChatDetailAdapter()
 
     private val vm by lazyActivityVM<ChatViewModel>()
 

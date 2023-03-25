@@ -9,13 +9,13 @@ import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.ext.animateRotateLoop
 
-class ChatListAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
+class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
     init {
         addMultipleItemBuild<AdapterChatLoadingBinding>()
             .setIsThisTypeCallback { _, _, item ->
                 return@setIsThisTypeCallback item.role == ChatMessage.LOADING
             }.setOnBindListViewHolderCallback { _, _, vb, item ->
-                vb.ivCycle.animateRotateLoop(duration = 500)
+                vb.ivCycle.animateRotateLoop(duration = 800)
                 vb.tvContent.text = item.content
             }.build()
 
