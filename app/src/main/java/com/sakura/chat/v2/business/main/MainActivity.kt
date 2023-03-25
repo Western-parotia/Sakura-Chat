@@ -13,6 +13,7 @@ import com.sakura.chat.databinding.AdapterChatListBinding
 import com.sakura.chat.v2.base.component.BaseActivityV2
 import com.sakura.chat.v2.base.dialog.SimpleInputTwoButtonDialog
 import com.sakura.chat.v2.business.main.res.ChatListItemRes
+import com.sakura.chat.v2.ext.toast
 import com.sakura.chat.v2.key.Keys
 
 class MainActivity : BaseActivityV2() {
@@ -31,8 +32,9 @@ class MainActivity : BaseActivityV2() {
 
     override fun init(savedInstanceState: Bundle?) {
         vb.ivSetting.setOnShakeLessClickListener {
-            SimpleInputTwoButtonDialog.createWithConfirm(this) {
+            SimpleInputTwoButtonDialog.createWithConfirm(this, "长安可粘贴OPENAI的API KEY") {
                 Keys.Net.OPENAI_API_KEY.spValue = it
+                "API KEY 更新成功".toast()
             }.show()
         }
 
