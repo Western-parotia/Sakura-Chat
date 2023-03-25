@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2F3B4D</color>
-    <color name="colorPrimaryDark">#2F3B4D</color>
-    <color name="colorAccent">#2F3B4D</color>
+    <color name="colorPrimary">#FA759E</color>
+    <color name="colorPrimaryDark">#FFD7E5</color>
+    <color name="colorAccent">#6DC9F7</color>
 
     <!--线的颜色-->
     <color name="colorLine">#1C1C1E</color>

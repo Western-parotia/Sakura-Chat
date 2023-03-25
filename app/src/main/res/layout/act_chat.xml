@@ -38,14 +38,14 @@
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"
             android:padding="@dimen/margin_5dp"
-            android:src="@mipmap/ic_voice_dark" />
+            android:src="@drawable/ic_voice_dark" />
 
         <EditText
             android:id="@+id/etText"
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:foregroundTint="#0CA6A4"
+            android:foregroundTint="@color/colorAccent"
             android:hint="点击请输入文本"
             android:textColor="@color/colorPrimaryText"
             android:textColorHint="@color/colorPrimaryText" />
@@ -63,7 +63,7 @@
             android:textSize="@dimen/dp_15"
             android:visibility="gone"
             app:shapeCornersRadius="@dimen/dp_5"
-            app:shapeSolidColor="@color/colorPrimary"
+            app:shapeSolidColor="@color/colorAccent"
             tools:visibility="visible" />
 
         <com.foundation.widget.shape.ShapeTextView
