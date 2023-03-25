@@ -15,8 +15,7 @@ object RetrofitFactory {
         okHttpClientBuilder.addDynamicDomainSkill()
         okHttpClientBuilder.authenticator { _, response ->
             val request = response.request().newBuilder()
-            val token = Keys.Net.OPENAI_API_KEY.spValue
-            request.addHeader("Authorization", "Bearer $token")
+            request.addHeader("Authorization", "Bearer ${Keys.Net.OPENAI_API_KEY.spValue}")
             return@authenticator request.build()
         }
         okHttpClientBuilder.addInterceptor(LoggerInterceptor(ArchConfig.debug, true))
