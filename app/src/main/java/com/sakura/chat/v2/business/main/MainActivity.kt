@@ -8,8 +8,6 @@ import com.sakura.chat.v2.ext.jumpToActivity
 
 class MainActivity : BaseActivityV2() {
 
-//    private val vm by lazyActivityVM<ChatViewModel>()
-
     private val vb by lazyVB<ActMainBinding>()
 
 //    override fun getContentVB(): ViewBinding = vb
@@ -24,9 +22,9 @@ class MainActivity : BaseActivityV2() {
 //
 //
 //        }
-//        jumpToActivity<ChatActivity> {
-//            putExtra("id", /*Keys.SP.newChatId()*/1L)
-//        }
-//        finish()
+        jumpToActivity<ChatActivity> {
+            putExtra("id", /*Keys.SP.newChatId()*/1L)
+        }
+        finish()
     }
 }
