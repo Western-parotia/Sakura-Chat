@@ -5,7 +5,7 @@
     android:id="@+id/llRoot"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorListItemBackgroundSub"
+    android:background="@color/colorListItemBackground"
     android:gravity="center_vertical"
     android:minHeight="@dimen/dp_45"
     android:orientation="horizontal"

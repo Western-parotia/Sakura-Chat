@@ -26,7 +26,7 @@ class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
                 vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
             } else {
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
+                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
             }
         }
 
