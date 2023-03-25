@@ -86,7 +86,7 @@ class ChatActivity : BaseActivityV2() {
             }
         }
 
-        vb.tvSend.setOnShakeLessClickListener {
+        vb.ivSend.setOnShakeLessClickListener {
             if (isEdit) {
                 val st = vb.etText.text?.toString()?.trim()
                 if (st.isNullOrEmpty()) {
