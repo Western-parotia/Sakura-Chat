@@ -17,6 +17,7 @@ import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatBinding
 import com.sakura.chat.utils.AudioRecorder
 import com.sakura.chat.v2.base.component.BaseActivityV2
+import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.notifyListItemChanged
@@ -48,18 +49,24 @@ class ChatActivity : BaseActivityV2() {
     override fun bindData() {
         vm.newMessage.observe(this) {
             adapter.addData(it)
+            vb.rvList.scrollToPosition(adapter.itemCount - 1)
         }
 
         vm.replaceMessage.observe(this) {
-            val old = it.first
+            val index = it.first
             val new = it.second
-            adapter.data.forEachIndexed { index, data ->
-                if (data == old) {
-                    adapter.data[index] = new
-                    adapter.notifyListItemChanged(index)
-                    return@observe
-                }
-            }
+            adapter.data[index] = new
+            adapter.notifyListItemChanged(index)
+        }
+
+        vm.deleteMessages.observe(this) {
+            val size = it.count()
+            adapter.data.subList(it.first, it.first + size).clear()
+            adapter.notifyItemRangeRemoved(it.first, size)
+        }
+
+        vm.isOutMessage.observe(this) {
+
         }
     }
 
@@ -73,20 +80,21 @@ class ChatActivity : BaseActivityV2() {
             PermissionBox.with(this)
                 .setMajorPermission(Manifest.permission.RECORD_AUDIO)
                 .startRequest {
-                    changeState()
+                    changeBottomUI()
+                    //立即开始录音
+                    changeRecorder()
                 }
         }
 
         vb.tvStartEnd.setOnShakeLessClickListener {
-            if (recorder == null) {
-                recorder = AudioRecorder().also { it.start() }
-                vb.tvStartEnd.text = "点击取消"
-            } else {
-                stopRecorder()
-            }
+            changeRecorder()
         }
 
         vb.ivSend.setOnShakeLessClickListener {
+            if (vm.isOutMessage.value == true) {
+                "当前聊天消息过多，请开启新的聊天".toast()
+                return@setOnShakeLessClickListener
+            }
             if (isEdit) {
                 val st = vb.etText.text?.toString()?.trim()
                 if (st.isNullOrEmpty()) {
@@ -110,7 +118,22 @@ class ChatActivity : BaseActivityV2() {
         }
     }
 
-    private fun changeState() {
+    /**
+     * 切换录音状态
+     */
+    private fun changeRecorder() {
+        if (recorder == null) {
+            recorder = AudioRecorder().also { it.start() }
+            vb.tvStartEnd.text = "点击取消"
+        } else {
+            stopRecorder()
+        }
+    }
+
+    /**
+     * 切换底部样式
+     */
+    private fun changeBottomUI() {
         isEdit = !isEdit
         if (isEdit) {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_dark)
@@ -132,7 +155,7 @@ class ChatActivity : BaseActivityV2() {
         ) {
             super.convertVB(holder, vb, item)
             vb.tvMsg.text = item.content
-            if (item.role == "user") {
+            if (item.role == ChatMessage.ROLE_USER) {
                 vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_sakura_flower)
             } else {
