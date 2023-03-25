@@ -3,6 +3,7 @@ package com.sakura.chat.v2.key
 import com.foundation.service.messagebus.MessageBusData
 import com.foundation.service.sp.MjSpUtils
 import com.foundation.service.sp.SpList
+import com.foundation.service.sp.SpString
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 
 object Keys {
@@ -11,6 +12,10 @@ object Keys {
          * 新聊天创建
          */
         val CHAT_CHANGED get() = MessageBusData<ChatChangedEvent>("chat_changed")
+    }
+
+    object Net {
+        val OPENAI_API_KEY: SpString = SpString("OPENAI_API_KEY")
     }
 
     object CHAT {
