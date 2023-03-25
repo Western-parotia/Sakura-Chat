@@ -15,6 +15,7 @@ import com.sakura.chat.v2.base.dialog.SimpleInputTwoButtonDialog
 import com.sakura.chat.v2.business.main.res.ChatListItemRes
 import com.sakura.chat.v2.ext.toast
 import com.sakura.chat.v2.key.Keys
+import java.security.Key
 
 class MainActivity : BaseActivityV2() {
 
@@ -32,10 +33,7 @@ class MainActivity : BaseActivityV2() {
 
     override fun init(savedInstanceState: Bundle?) {
         vb.tvKey.setOnShakeLessClickListener {
-            SimpleInputTwoButtonDialog.createWithConfirm(this, "长安可粘贴OPENAI的API KEY") {
-                Keys.Net.OPENAI_API_KEY.spValue = it
-                "API KEY 更新成功".toast()
-            }.show()
+            showAPIKeyInputDialog()
         }
 
         adapter.setOnItemShakeLessClickListener { _, position ->
@@ -45,8 +43,23 @@ class MainActivity : BaseActivityV2() {
         vb.rvList.adapter = adapter
 
         vb.ivAdd.setOnShakeLessClickListener {
-            ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
+            if (Keys.Net.OPENAI_API_KEY.spValue.isEmpty()) {
+                showAPIKeyInputDialog {
+                    ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
+                }
+            } else {
+                ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
+            }
+
         }
+    }
+
+    private fun showAPIKeyInputDialog(onSetNewKey: (() -> Unit)? = null) {
+        SimpleInputTwoButtonDialog.createWithConfirm(this, "长安粘贴 OPEN AI 的 API KEY") {
+            Keys.Net.OPENAI_API_KEY.spValue = it
+            "API KEY 更新成功".toast()
+            onSetNewKey?.invoke()
+        }.show()
     }
 
     private fun updateList() {
