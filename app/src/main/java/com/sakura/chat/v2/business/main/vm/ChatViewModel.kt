@@ -38,10 +38,16 @@ class ChatViewModel : BaseViewModel() {
      */
     private val _isOutMessage = MutableLiveData<Boolean>()
     val isOutMessage: LiveData<Boolean> = _isOutMessage
+    val handler = object : AllNetLoadingHandler() {
+        override fun onFailure(tagName: String, e: Throwable) {
+            super.onFailure(tagName, e)
+//            _newMessage.observe()
+        }
+    }
 
     fun sendMessageWithVoice(chatId: Long, file: File) {
 
-        val handler = AllNetLoadingHandler()
+
         if (!file.exists() || file.length() <= 0) {
             return handler.onFailure(
                 "badFile",
@@ -93,7 +99,7 @@ class ChatViewModel : BaseViewModel() {
         }
         val msg = chatRes.choices[0].message
         val newText = oldText.copy(isSuccess = true)
-        val result = ChatMessageHistory(msg.role, msg.content, false)
+        val result = ChatMessageHistory(msg.role, msg.content, false, isFresh = true)
 
         chatMessages.removeIfIterator { it === oldText }
         chatMessages.add(newText)
@@ -104,7 +110,7 @@ class ChatViewModel : BaseViewModel() {
         _newMessage.smartPost(listOf(result))
         //超出大小，不允许继续回复
         checkOutMessages(chatMessages)
-
+        //
         Keys.CHAT.saveChatMessages(chatId, chatMessages)
     }
 
@@ -121,10 +127,22 @@ class ChatViewModel : BaseViewModel() {
     private fun packageNewMessageList(): List<ChatMessage> {
         return arrayListOf(
             ChatMessage(ChatMessage.ROLE_USER, "你好，我是Sakura,你喜欢蓝色吗"),
-            ChatMessage("assistant", "Hi Sakura,我喜欢蓝色"),
+            ChatMessage(ChatMessage.ROLE_ASSISTANT, "Hi Sakura,我喜欢蓝色"),
             ChatMessage(ChatMessage.ROLE_USER, "那你喜欢绿色吗？"),
-            ChatMessage("assistant", "我不喜欢"),
+            ChatMessage(ChatMessage.ROLE_ASSISTANT, "我不喜欢"),
         )
+    }
+
+    fun testSendMessage(role: String) {
+        _newMessage.smartPost(
+            listOf(
+                ChatMessageHistory(
+                    role, "",
+                    true, isFresh = false
+                )
+            )
+        )
+
     }
 
 }

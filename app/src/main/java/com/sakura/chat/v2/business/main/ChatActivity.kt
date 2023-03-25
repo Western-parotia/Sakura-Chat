@@ -17,6 +17,7 @@ import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatBinding
 import com.sakura.chat.utils.AudioRecorder
 import com.sakura.chat.v2.base.component.BaseActivityV2
+import com.sakura.chat.v2.business.main.adapter.ChatListAdapter
 import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
@@ -35,7 +36,7 @@ class ChatActivity : BaseActivityV2() {
     }
 
     private val vb by lazyVB<ActChatBinding>()
-    private val adapter = MyAdapter()
+    private val adapter = ChatListAdapter()
 
     private val vm by lazyActivityVM<ChatViewModel>()
 
@@ -68,6 +69,7 @@ class ChatActivity : BaseActivityV2() {
         vm.isOutMessage.observe(this) {
 
         }
+        vm.testSendMessage(ChatMessage.LOADING)
     }
 
     override fun getContentVB() = vb
@@ -148,24 +150,6 @@ class ChatActivity : BaseActivityV2() {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
             vb.etText.isVisible = false
             vb.tvStartEnd.isVisible = true
-        }
-    }
-
-    private class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
-        override fun convertVB(
-            holder: ViewBindingViewHolder<AdapterChatBinding>,
-            vb: AdapterChatBinding,
-            item: ChatMessageHistory
-        ) {
-            super.convertVB(holder, vb, item)
-            vb.tvMsg.text = item.content
-            if (item.role == ChatMessage.ROLE_USER) {
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
-                vb.ivAvatar.setImageResource(R.drawable.ic_chat_sakura_flower)
-            } else {
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
-                vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
-            }
         }
     }
 

@@ -15,6 +15,10 @@ data class ChatReq(val messages: List<ChatMessage>, val model: String = "gpt-3.5
 data class ChatMessage(val role: String = "", val content: String = "") {
     companion object {
         const val ROLE_USER = "user"
+        const val ROLE_ASSISTANT = "assistant"
+
+        //仅本地使用
+        const val LOADING = "loading"
     }
 }
 
@@ -22,4 +26,9 @@ data class ChatMessage(val role: String = "", val content: String = "") {
  * 保存的消息记录
  * @param isSuccess 是否发送成功
  */
-data class ChatMessageHistory(val role: String, val content: String, val isSuccess: Boolean)
+data class ChatMessageHistory(
+    val role: String,
+    val content: String,
+    val isSuccess: Boolean,
+    val isFresh: Boolean = false
+)
