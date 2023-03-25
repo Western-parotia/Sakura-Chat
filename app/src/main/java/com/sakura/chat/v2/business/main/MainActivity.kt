@@ -31,7 +31,7 @@ class MainActivity : BaseActivityV2() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        vb.ivSetting.setOnShakeLessClickListener {
+        vb.tvKey.setOnShakeLessClickListener {
             SimpleInputTwoButtonDialog.createWithConfirm(this, "长安可粘贴OPENAI的API KEY") {
                 Keys.Net.OPENAI_API_KEY.spValue = it
                 "API KEY 更新成功".toast()
