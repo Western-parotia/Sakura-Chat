@@ -2,13 +2,12 @@ package com.sakura.chat.v2.business.main.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.foundation.widget.utils.ext.smartPost
 import com.sakura.chat.v2.base.net.AllNetLoadingHandler
 import com.sakura.chat.v2.base.net.BaseViewModel
 import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.data.ChatReq
-import com.sakura.chat.v2.ext.removeIfIterator
-import com.sakura.chat.v2.ext.smartPost
 import com.sakura.chat.v2.key.Keys
 import okhttp3.MediaType
 import okhttp3.MultipartBody
@@ -18,20 +17,8 @@ import java.io.File
 class ChatViewModel : BaseViewModel() {
     private val _newMessage = MutableLiveData<List<ChatMessageHistory>>()
     val newMessage: LiveData<List<ChatMessageHistory>> = _newMessage
-
-    /**
-     * 数据发生变更
-     * 第一个：替换的index
-     * 第二个：新数据
-     */
-    private val _replaceMessage = MutableLiveData<Pair<Int, ChatMessageHistory>>()
-    val replaceMessage: LiveData<Pair<Int, ChatMessageHistory>> = _replaceMessage
-
-    /**
-     * 按index删除消息
-     */
-    private val _deleteMessages = MutableLiveData<IntRange>()
-    val deleteMessages: LiveData<IntRange> = _deleteMessages
+    private val _loadingMessage = MutableLiveData<ChatMessageHistory>()
+    val loadingMessage: LiveData<ChatMessageHistory> = _loadingMessage
 
     /**
      * 消息过长，不允许修改
@@ -39,24 +26,26 @@ class ChatViewModel : BaseViewModel() {
     private val _isOutMessage = MutableLiveData<Boolean>()
     val isOutMessage: LiveData<Boolean> = _isOutMessage
     private val handler = object : AllNetLoadingHandler() {
-        override fun onStart() {
-            super.onStart()
-            listOf(
+        override fun onSuccess() {
+            super.onSuccess()
+            _loadingMessage.smartPost(
                 ChatMessageHistory(
-                    ChatMessage.LOADING,
-                    "...", true
+                    ChatMessage.END, ""
                 )
             )
         }
 
+        override fun onStart() {
+            super.onStart()
+            _loadingMessage.smartPost(ChatMessageHistory(ChatMessage.LOADING, "..."))
+        }
+
         override fun onFailure(tagName: String, e: Throwable) {
             super.onFailure(tagName, e)
-            _newMessage.smartPost(
-                listOf(
-                    ChatMessageHistory(
-                        ChatMessage.LOADING,
-                        "$tagName,${e.message}", true
-                    )
+            _loadingMessage.smartPost(
+                ChatMessageHistory(
+                    ChatMessage.ERROR,
+                    "$tagName,${e.message}"
                 )
             )
         }

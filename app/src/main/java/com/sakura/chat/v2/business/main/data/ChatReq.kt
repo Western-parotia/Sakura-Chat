@@ -20,6 +20,7 @@ data class ChatMessage(val role: String = "", val content: String = "") {
         //仅本地使用
         const val LOADING = "loading"
         const val ERROR = "error"
+        const val END = "end"
     }
 }
 

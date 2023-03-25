@@ -1,7 +1,7 @@
 package com.sakura.chat.v2.base.loading
 
 import androidx.lifecycle.MutableLiveData
-import com.sakura.chat.v2.ext.smartPost
+import com.foundation.widget.utils.ext.smartPost
 
 /**
  * create by zhusw on 7/28/21 13:59

@@ -10,13 +10,12 @@ import com.sakura.chat.v2.ext.animateRotateLoop
 
 class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
     init {
-        addMultipleItemBuild<AdapterChatLoadingBinding>()
-            .setIsThisTypeCallback { _, _, item ->
-                return@setIsThisTypeCallback item.role == ChatMessage.LOADING
-            }.setOnBindListViewHolderCallback { _, _, vb, item ->
-                vb.ivCycle.animateRotateLoop(duration = 800)
-                vb.tvContent.text = item.content
-            }.build()
+//        addMultipleItemBuild<AdapterChatLoadingBinding>()
+//            .setIsThisTypeCallback { _, _, item ->
+//                return@setIsThisTypeCallback item.role == ChatMessage.LOADING
+//            }.setOnBindListViewHolderCallback { _, _, vb, item ->
+//
+//            }.build()
         //如果是最新的回复 isFresh=true，且是最后一条，且是GPT的 则播放逐字动画
         addMultipleItemBuild<AdapterChatBinding>().setIsThisTypeCallback { adapter, position, item ->
             return@setIsThisTypeCallback item.isFresh
@@ -25,6 +24,7 @@ class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
         }.setOnBindListViewHolderCallback { _, _, vb, item ->
             vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
             vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+            vb.tvMsg.text = item.content
         }.build()
 
         addDefaultMultipleItem<AdapterChatBinding> { _, _, vb, item ->

@@ -8,10 +8,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.foundation.widget.loading.IPageLoading
 import com.foundation.widget.loading.PageLoadingAdapter
+import com.foundation.widget.utils.ext.smartPost
 import com.foundation.widget.utils.other.MjPage
 import com.sakura.chat.v2.ext.allTrue
 import com.sakura.chat.v2.ext.oneTrue
-import com.sakura.chat.v2.ext.smartPost
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.finishRefreshLoadMore
 import com.scwang.smart.refresh.layout.isEnabledLoadMore

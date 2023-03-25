@@ -2,6 +2,7 @@ package com.sakura.chat.v2.business.main
 
 import android.Manifest
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import com.foundation.app.arc.utils.param.BundleParams
 import com.foundation.service.permission.PermissionBox
@@ -12,11 +13,14 @@ import com.foundation.widget.utils.ext.view.toUIContext
 import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.R
 import com.sakura.chat.databinding.ActChatBinding
+import com.sakura.chat.databinding.AdapterChatLoadingBinding
 import com.sakura.chat.utils.AudioRecorder
 import com.sakura.chat.v2.base.component.BaseActivityV2
 import com.sakura.chat.v2.business.main.adapter.ChatDetailAdapter
 import com.sakura.chat.v2.business.main.data.ChatMessage
+import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
+import com.sakura.chat.v2.ext.animateRotateLoop
 import com.sakura.chat.v2.ext.notifyListItemChanged
 import com.sakura.chat.v2.ext.toast
 import java.io.File
@@ -48,24 +52,27 @@ class ChatActivity : BaseActivityV2() {
             adapter.addData(it)
             vb.rvList.scrollToPosition(adapter.itemCount - 1)
         }
-
-        vm.replaceMessage.observe(this) {
-            val index = it.first
-            val new = it.second
-            adapter.data[index] = new
-            adapter.notifyListItemChanged(index)
-        }
-
-        vm.deleteMessages.observe(this) {
-            val size = it.count()
-            adapter.data.subList(it.first, it.first + size).clear()
-            adapter.notifyItemRangeRemoved(it.first, size)
-        }
-
         vm.isOutMessage.observe(this) {
-
+            "总聊天字符书已超出50000，请开启新的聊天会话".toast()
         }
-        vm.testSendMessage(ChatMessage.LOADING)
+        vm.loadingMessage.observe(this) {
+            adapter.removeAllFooterView()
+            when (it.role) {
+                ChatMessage.ERROR -> {
+                    adapter.addData(it)
+                }
+                ChatMessage.LOADING -> {
+                    adapter.setFooterView(createFooterView(it))
+                }
+            }
+        }
+    }
+
+    private fun createFooterView(data: ChatMessageHistory): View {
+        val vb = AdapterChatLoadingBinding.inflate(layoutInflater)
+        vb.ivCycle.animateRotateLoop(duration = 800)
+        vb.tvContent.text = data.content
+        return vb.root
     }
 
     override fun getContentVB() = vb
