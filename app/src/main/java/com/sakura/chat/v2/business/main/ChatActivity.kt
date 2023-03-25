@@ -8,8 +8,10 @@ import com.foundation.service.permission.PermissionBox
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
 import com.foundation.widget.utils.ext.view.hideKeyboard
+import com.foundation.widget.utils.ext.view.jumpToActivity
 import com.foundation.widget.utils.ext.view.setOnShakeLessClickListener
 import com.foundation.widget.utils.ext.view.toUIContext
+import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.R
 import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatBinding
@@ -23,6 +25,14 @@ import java.io.File
 
 class ChatActivity : BaseActivityV2() {
 
+    companion object {
+        fun jump(ui: IUIContext, chatId: Long) {
+            ui.jumpToActivity<ChatActivity> {
+                putExtra("chatId", chatId)
+            }
+        }
+    }
+
     private val vb by lazyVB<ActChatBinding>()
     private val adapter = MyAdapter()
 
@@ -33,7 +43,7 @@ class ChatActivity : BaseActivityV2() {
     private var isEdit = true
 
     @BundleParams("chatId")
-    private val id = 0L
+    private val id = -0L
 
     override fun bindData() {
         vm.newMessage.observe(this) {
@@ -129,7 +139,7 @@ class ChatActivity : BaseActivityV2() {
         }
     }
 
-    class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
+    private class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
         override fun convertVB(
             holder: ViewBindingViewHolder<AdapterChatBinding>,
             vb: AdapterChatBinding,
