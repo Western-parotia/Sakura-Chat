@@ -133,11 +133,11 @@ class ChatActivity : BaseActivityV2() {
             super.convertVB(holder, vb, item)
             vb.tvMsg.text = item.content
             if (item.role == "user") {
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
-                vb.ivAvatar.setImageResource(R.drawable.ic_head)
-            } else {
                 vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
-                vb.ivAvatar.setImageResource(R.drawable.ic_openai_dark)
+                vb.ivAvatar.setImageResource(R.drawable.ic_chat_sakura_flower)
+            } else {
+                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+                vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
             }
         }
     }
