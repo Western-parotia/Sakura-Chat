@@ -98,13 +98,12 @@ class ChatViewModel : BaseViewModel() {
         _newMessage.smartPost(listOf(oldText))
         val chatMessages = Keys.CHAT.getChatMessages(chatId).toMutableList()
         chatMessages.add(oldText)
-        val oldIndex = chatMessages.size - 1
         val chatReq = ChatReq(
-            packageNewMessageList() + chatMessages.mapNotNull {
-                if (it.isSuccess) ChatMessage(
+            chatMessages.map {
+                ChatMessage(
                     it.role,
                     it.content
-                ) else null
+                )
             }
         )
         Keys.CHAT.saveChatMessages(chatId, chatMessages)
@@ -113,19 +112,12 @@ class ChatViewModel : BaseViewModel() {
             gptApiService.goTalkToGPT(chatReq)
         }
         val msg = chatRes.choices[0].message
-        val newText = oldText.copy(isSuccess = true)
-        val result = ChatMessageHistory(msg.role, msg.content, false, isFresh = true)
-
-        chatMessages.removeIfIterator { it === oldText }
-        chatMessages.add(newText)
-        chatMessages.add(result)
-        //更新上一条消息的状态
-        _replaceMessage.smartPost(oldIndex to newText)
+        val result = ChatMessageHistory(msg.role, msg.content, isFresh = true)
         //返回新的消息
         _newMessage.smartPost(listOf(result))
         //超出大小，不允许继续回复
         checkOutMessages(chatMessages)
-        //
+        chatMessages.add(result)
         Keys.CHAT.saveChatMessages(chatId, chatMessages)
     }
 
@@ -138,7 +130,7 @@ class ChatViewModel : BaseViewModel() {
         }
     }
 
-
+    //测试消息
     private fun packageNewMessageList(): List<ChatMessage> {
         return arrayListOf(
             ChatMessage(ChatMessage.ROLE_USER, "你好，我是Sakura,你喜欢蓝色吗"),
@@ -153,7 +145,7 @@ class ChatViewModel : BaseViewModel() {
             listOf(
                 ChatMessageHistory(
                     role, "。。。",
-                    true, isFresh = false
+                    isFresh = false
                 )
             )
         )
