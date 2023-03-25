@@ -13,11 +13,15 @@ object RetrofitFactory {
     fun create(): Retrofit {
         val okHttpClientBuilder: OkHttpClient.Builder = OkHttpClient.Builder()
         okHttpClientBuilder.addDynamicDomainSkill()
-        okHttpClientBuilder.authenticator { _, response ->
-            val request = response.request().newBuilder()
-            request.addHeader("Authorization", "Bearer ${Keys.Net.OPENAI_API_KEY.spValue}")
-            return@authenticator request.build()
-        }
+        /*这样实现如果再Bearer 中出现异常字符 会导致Retrofit 抛Crash
+        所以还是用拦截器替换比较安全，这样出异常网络层可统一拦截到
+        **/
+//        okHttpClientBuilder.authenticator { _, response ->
+//            val request = response.request().newBuilder()
+//            request.addHeader("Authorization", "Bearer ${Keys.Net.OPENAI_API_KEY.spValue}")
+//            return@authenticator request.build()
+//        }
+        okHttpClientBuilder.addInterceptor(TokenInterceptor())
         okHttpClientBuilder.addInterceptor(LoggerInterceptor(ArchConfig.debug, true))
         val okHttpClient = okHttpClientBuilder.build()
         return Retrofit.Builder()
