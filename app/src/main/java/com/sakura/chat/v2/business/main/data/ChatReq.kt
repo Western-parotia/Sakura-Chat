@@ -19,16 +19,15 @@ data class ChatMessage(val role: String = "", val content: String = "") {
 
         //仅本地使用
         const val LOADING = "loading"
+        const val ERROR = "error"
     }
 }
 
 /**
  * 保存的消息记录
- * @param isSuccess 是否发送成功
  */
 data class ChatMessageHistory(
     val role: String,
     val content: String,
-    val isSuccess: Boolean,
     val isFresh: Boolean = false
 )

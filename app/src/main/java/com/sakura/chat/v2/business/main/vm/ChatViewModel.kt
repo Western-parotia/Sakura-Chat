@@ -38,16 +38,31 @@ class ChatViewModel : BaseViewModel() {
      */
     private val _isOutMessage = MutableLiveData<Boolean>()
     val isOutMessage: LiveData<Boolean> = _isOutMessage
-    val handler = object : AllNetLoadingHandler() {
+    private val handler = object : AllNetLoadingHandler() {
+        override fun onStart() {
+            super.onStart()
+            listOf(
+                ChatMessageHistory(
+                    ChatMessage.LOADING,
+                    "...", true
+                )
+            )
+        }
+
         override fun onFailure(tagName: String, e: Throwable) {
             super.onFailure(tagName, e)
-//            _newMessage.observe()
+            _newMessage.smartPost(
+                listOf(
+                    ChatMessageHistory(
+                        ChatMessage.LOADING,
+                        "$tagName,${e.message}", true
+                    )
+                )
+            )
         }
     }
 
     fun sendMessageWithVoice(chatId: Long, file: File) {
-
-
         if (!file.exists() || file.length() <= 0) {
             return handler.onFailure(
                 "badFile",
@@ -68,7 +83,7 @@ class ChatViewModel : BaseViewModel() {
     fun sendMessageWithText(chatId: Long, text: String) {
         netLaunch("sendMessageWithText") {
             talkToGPT(chatId, text)
-        }.start(AllNetLoadingHandler())
+        }.start(handler)
     }
 
     fun initDefMessages(chatId: Long) {

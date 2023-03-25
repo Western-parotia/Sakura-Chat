@@ -19,7 +19,7 @@ class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
                 vb.tvContent.text = item.content
             }.build()
 
-        addDefaultMultipleItem<AdapterChatBinding> { _, _, vb, item ->
+        addDefaultMultipleItem<AdapterChatBinding> { adapter, holder, vb, item ->
             vb.tvMsg.text = item.content
             if (item.role == ChatMessage.ROLE_USER) {
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_sakura_flower)
@@ -27,6 +27,10 @@ class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
             } else {
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
                 vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+            }
+            //如果是最新的回复 isFresh=true，且是最后一条，且是GPT的 则播放逐字动画
+            if (item.isFresh && holder.adapterLayoutPosition == adapter.data.lastIndex && item.role == ChatMessage.ROLE_ASSISTANT) {
+
             }
         }
 
