@@ -4,9 +4,9 @@
         <color android:color="@color/colorPrimary" />
     </item>
     <item
-        android:drawable="@drawable/ic_launcher"
+        android:drawable="@drawable/ic_launcher_xx"
         android:gravity="bottom|center_horizontal"
-        android:bottom="@dimen/dp_100"
-        android:width="@dimen/dp_80"
-        android:height="@dimen/dp_80" />
+        android:bottom="@dimen/dp_120"
+        android:width="@dimen/dp_60"
+        android:height="@dimen/dp_60" />
 </layer-list>
