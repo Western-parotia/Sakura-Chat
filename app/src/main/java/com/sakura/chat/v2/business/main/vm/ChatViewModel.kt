@@ -21,12 +21,23 @@ class ChatViewModel : BaseViewModel() {
 
     /**
      * 数据发生变更
-     * 第一个：源数据
+     * 第一个：替换的index
      * 第二个：新数据
      */
-    private val _replaceMessage = MutableLiveData<Pair<ChatMessageHistory, ChatMessageHistory>>()
-    val replaceMessage: LiveData<Pair<ChatMessageHistory, ChatMessageHistory>> = _replaceMessage
+    private val _replaceMessage = MutableLiveData<Pair<Int, ChatMessageHistory>>()
+    val replaceMessage: LiveData<Pair<Int, ChatMessageHistory>> = _replaceMessage
 
+    /**
+     * 按index删除消息
+     */
+    private val _deleteMessages = MutableLiveData<IntRange>()
+    val deleteMessages: LiveData<IntRange> = _deleteMessages
+
+    /**
+     * 消息过长，不允许修改
+     */
+    private val _isOutMessage = MutableLiveData<Boolean>()
+    val isOutMessage: LiveData<Boolean> = _isOutMessage
 
     fun sendMessageWithVoice(chatId: Long, file: File) {
 
@@ -55,14 +66,18 @@ class ChatViewModel : BaseViewModel() {
     }
 
     fun initDefMessages(chatId: Long) {
-        _newMessage.smartPost(Keys.CHAT.getChatMessages(chatId))
+        val ms = Keys.CHAT.getChatMessages(chatId)
+        _newMessage.smartPost(ms)
+        //超出大小，不允许继续回复
+        checkOutMessages(ms)
     }
 
     private suspend fun talkToGPT(chatId: Long, text: String) {
-        val oldText = ChatMessageHistory("user", text, false)
+        val oldText = ChatMessageHistory(ChatMessage.ROLE_USER, text, false)
         _newMessage.smartPost(listOf(oldText))
         val chatMessages = Keys.CHAT.getChatMessages(chatId).toMutableList()
         chatMessages.add(oldText)
+        val oldIndex = chatMessages.size - 1
         val chatReq = ChatReq(
             packageNewMessageList() + chatMessages.mapNotNull {
                 if (it.isSuccess) ChatMessage(
@@ -79,21 +94,35 @@ class ChatViewModel : BaseViewModel() {
         val msg = chatRes.choices[0].message
         val newText = oldText.copy(isSuccess = true)
         val result = ChatMessageHistory(msg.role, msg.content, false)
-        _replaceMessage.smartPost(oldText to newText)
-        _newMessage.smartPost(listOf(result))
 
         chatMessages.removeIfIterator { it === oldText }
         chatMessages.add(newText)
         chatMessages.add(result)
+        //更新上一条消息的状态
+        _replaceMessage.smartPost(oldIndex to newText)
+        //返回新的消息
+        _newMessage.smartPost(listOf(result))
+        //超出大小，不允许继续回复
+        checkOutMessages(chatMessages)
+
         Keys.CHAT.saveChatMessages(chatId, chatMessages)
+    }
+
+    private fun checkOutMessages(ms: List<ChatMessageHistory>) {
+        if (ms.size > 10) {
+            val size = ms.sumOf { it.content.length }
+            if (size > 50_000) {
+                _isOutMessage.smartPost(true)
+            }
+        }
     }
 
 
     private fun packageNewMessageList(): List<ChatMessage> {
         return arrayListOf(
-            ChatMessage("user", "你好，我是Sakura,你喜欢蓝色吗"),
+            ChatMessage(ChatMessage.ROLE_USER, "你好，我是Sakura,你喜欢蓝色吗"),
             ChatMessage("assistant", "Hi Sakura,我喜欢蓝色"),
-            ChatMessage("user", "那你喜欢绿色吗？"),
+            ChatMessage(ChatMessage.ROLE_USER, "那你喜欢绿色吗？"),
             ChatMessage("assistant", "我不喜欢"),
         )
     }
