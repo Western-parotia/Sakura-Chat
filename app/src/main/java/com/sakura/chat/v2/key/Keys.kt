@@ -56,11 +56,16 @@ object Keys {
                 newIds.add(chatId)
                 newIds.sort()
                 chatDataIds.spValue = newIds
+                MjSpUtils.put(getChatKey(chatId), chatMessages)
                 MessageBusKey.CHAT_CHANGED.send(
                     ChatChangedEvent(chatId, ChatChangedState.ADD)
                 )
+            } else {
+                MjSpUtils.put(getChatKey(chatId), chatMessages)
+                MessageBusKey.CHAT_CHANGED.send(
+                    ChatChangedEvent(chatId, ChatChangedState.UPDATE)
+                )
             }
-            MjSpUtils.put(getChatKey(chatId), chatMessages)
         }
 
         /**
@@ -69,8 +74,9 @@ object Keys {
         fun removeChatMessages(chatId: Long) {
             val ids = chatDataIds.spValue
             if (ids.contains(chatId)) {
-                ids.toMutableList().remove(chatId)
-                chatDataIds.spValue = ids
+                val newIds = ids.toMutableList()
+                newIds.remove(chatId)
+                chatDataIds.spValue = newIds
             }
             MjSpUtils.removeKey(getChatKey(chatId))
             MessageBusKey.CHAT_CHANGED.send(

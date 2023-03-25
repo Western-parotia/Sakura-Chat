@@ -13,9 +13,9 @@
         android:background="@color/colorPrimary"
         android:elevation="@dimen/dp_5"
         android:gravity="center"
-        android:text="聊天"
         android:textColor="@color/colorPrimaryText"
-        android:textSize="@dimen/dp_18" />
+        android:textSize="@dimen/dp_18"
+        tools:text="聊天（id:10）" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
@@ -29,10 +29,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/dp_55"
         android:background="@color/colorPrimary"
         android:elevation="@dimen/dp_5"
         android:gravity="center_vertical"
+        android:minHeight="@dimen/dp_55"
         android:orientation="horizontal"
         android:paddingVertical="@dimen/dp_5">
 

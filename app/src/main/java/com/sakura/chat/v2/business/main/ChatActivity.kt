@@ -44,7 +44,7 @@ class ChatActivity : BaseActivityV2() {
     private var isEdit = true
 
     @BundleParams("chatId")
-    private val id = -0L
+    private val chatId = -0L
 
     override fun bindData() {
         vm.newMessage.observe(this) {
@@ -73,7 +73,9 @@ class ChatActivity : BaseActivityV2() {
     override fun getContentVB() = vb
 
     override fun init(savedInstanceState: Bundle?) {
-        vm.initDefMessages(id)
+        vb.toolBar.text = "聊天（Id:$chatId）"
+
+        vm.initDefMessages(chatId)
         vb.rvList.adapter = adapter
 
         vb.ivChangeState.setOnShakeLessClickListener {
@@ -81,8 +83,10 @@ class ChatActivity : BaseActivityV2() {
                 .setMajorPermission(Manifest.permission.RECORD_AUDIO)
                 .startRequest {
                     changeBottomUI()
-                    //立即开始录音
-                    changeRecorder()
+                    if (!isEdit) {
+                        //立即开始录音
+                        changeRecorder()
+                    }
                 }
         }
 
@@ -102,14 +106,14 @@ class ChatActivity : BaseActivityV2() {
                     return@setOnShakeLessClickListener
                 }
                 vb.etText.setText("")
-                vm.sendMessageWithText(id, st)
+                vm.sendMessageWithText(chatId, st)
                 toUIContext().hideKeyboard()
             } else {
                 val r = recorder
                 stopRecorder()
                 if (r?.state == 2) {
                     val file = r.fileDir
-                    vm.sendMessageWithVoice(id, File(file))
+                    vm.sendMessageWithVoice(chatId, File(file))
                 } else {
                     "请先开始录音".toast()
                 }

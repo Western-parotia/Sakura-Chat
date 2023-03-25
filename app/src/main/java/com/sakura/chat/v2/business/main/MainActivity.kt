@@ -22,6 +22,7 @@ import com.sakura.chat.v2.base.dialog.SimpleTwoButtonDialog
 import com.sakura.chat.v2.business.main.res.ChatListItemRes
 import com.sakura.chat.v2.ext.animateScaleLoop
 import com.sakura.chat.v2.ext.toast
+import com.sakura.chat.v2.key.ChatChangedState
 import com.sakura.chat.v2.key.Keys
 
 class MainActivity : BaseActivityV2() {
@@ -34,8 +35,13 @@ class MainActivity : BaseActivityV2() {
     private var animator: ValueAnimator? = null
 
     override fun bindData() {
-        Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) {
-            updateList()
+        Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) { events ->
+            //除了数据变更，其他的都刷新列表
+            val shouldRefresh =
+                events.any { it.state != ChatChangedState.UPDATE }
+            if (shouldRefresh) {
+                updateList()
+            }
         }
     }
 
@@ -50,9 +56,14 @@ class MainActivity : BaseActivityV2() {
         adapter.setOnItemLongClickListener { _, _, position ->
             val data = adapter.data[position]
             val tip = data.firstMsg.let { if (it.length > 10) it.substring(0, 10) else it }
-            SimpleTwoButtonDialog(this, content = "是否要删除${tip}", confirm = "删除", onConfirm = {
-                Keys.CHAT.removeChatMessages(data.chatId)
-            }).show()
+            SimpleTwoButtonDialog(
+                this,
+                content = "是否要删除id:${data.chatId},标题:${tip},这条聊天？",
+                confirm = "删除",
+                onConfirm = {
+                    Keys.CHAT.removeChatMessages(data.chatId)
+                })
+                .show()
             true
         }
         updateList()
@@ -101,6 +112,7 @@ class MainActivity : BaseActivityV2() {
             item: ChatListItemRes
         ) {
             super.convertVB(holder, vb, item)
+            vb.tvTitle.text = "Id:${item.chatId}"
             vb.tvFirstMsg.text = item.firstMsg
         }
     }
