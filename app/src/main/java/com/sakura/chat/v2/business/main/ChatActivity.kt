@@ -21,7 +21,8 @@ import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.animateRotateLoop
-import com.sakura.chat.v2.ext.notifyListItemChanged
+import com.sakura.chat.v2.ext.postMainDelayedLifecycle
+import com.sakura.chat.v2.ext.removeGlobalRunnable
 import com.sakura.chat.v2.ext.toast
 import java.io.File
 
@@ -43,6 +44,15 @@ class ChatActivity : BaseActivityV2() {
     private var recorder: AudioRecorder? = null
 
     private var isEdit = true
+
+    private val recordingRun = object : Runnable {
+        private var index = 0
+        private val list = listOf(".", "..", "...")
+        override fun run() {
+            vb.tvPoint.text = list[(index++) % list.size]
+            postMainDelayedLifecycle(this@ChatActivity, 300, run = this)
+        }
+    }
 
     @BundleParams("chatId")
     private val chatId = -0L
@@ -132,16 +142,25 @@ class ChatActivity : BaseActivityV2() {
         if (isEdit) {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
             vb.etText.isVisible = true
-            vb.tvRecording.isVisible = false
+            vb.clRecording.isVisible = false
         } else {
             vb.ivChangeState.setImageResource(R.drawable.ic_close_pink_128)
             vb.etText.isVisible = false
-            vb.tvRecording.isVisible = true
+            vb.clRecording.isVisible = true
             recorder = AudioRecorder().also { it.start() }
+            postMainDelayedLifecycle(this, 300, run = recordingRun)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (!isEdit) {
+            changeBottomUI()
         }
     }
 
     private fun stopRecorder() {
+        removeGlobalRunnable(recordingRun)
         recorder?.stop()
         recorder = null
     }

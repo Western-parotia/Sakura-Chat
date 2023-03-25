@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/toolBar"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dp_45"
             android:gravity="center"

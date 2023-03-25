@@ -39,6 +39,10 @@ class MainActivity : BaseActivityV2() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
+        vb.toolBar.setOnShakeLessClickListener {
+            AboutDialog(this).show()
+        }
+
         vb.tvKey.setOnShakeLessClickListener {
             showAPIKeyInputDialog()
         }
