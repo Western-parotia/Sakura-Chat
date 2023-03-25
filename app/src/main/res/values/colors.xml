@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3E7FA5</color>
-    <color name="colorPrimaryDark">#1E445E</color>
+    <color name="colorPrimaryDark">#305C79</color>
     <color name="colorAccent">#E5738E</color>
 
     <!--线的颜色-->
@@ -18,4 +18,5 @@
     <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_999999">#999999</color>
     <color name="color_f0f0f0">#f0f0f0</color>
+    <color name="color_shadow_line">#aa305C79</color>
 </resources>
