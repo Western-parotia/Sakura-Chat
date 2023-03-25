@@ -42,9 +42,14 @@ class MainActivity : BaseActivityV2() {
         adapter.setOnItemLongClickListener { _, _, position ->
             val data = adapter.data[position]
             val tip = data.firstMsg.let { if (it.length > 10) it.substring(0, 10) else it }
-            SimpleTwoButtonDialog(this, content = "是否要删除${tip}", confirm = "删除", onConfirm = {
-                Keys.CHAT.removeChatMessages(data.chatId)
-            }).show()
+            SimpleTwoButtonDialog(
+                this,
+                content = "是否要删除id:${data.chatId},标题:${tip},这条聊天？",
+                confirm = "删除",
+                onConfirm = {
+                    Keys.CHAT.removeChatMessages(data.chatId)
+                })
+                .show()
             true
         }
         updateList()
@@ -91,6 +96,7 @@ class MainActivity : BaseActivityV2() {
             item: ChatListItemRes
         ) {
             super.convertVB(holder, vb, item)
+            vb.tvTitle.text = "Id:${item.chatId}"
             vb.tvFirstMsg.text = item.firstMsg
         }
     }
