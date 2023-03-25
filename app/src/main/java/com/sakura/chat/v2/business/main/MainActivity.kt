@@ -1,6 +1,12 @@
 package com.sakura.chat.v2.business.main
 
+import android.animation.Animator
+import android.animation.PropertyValuesHolder
+import android.animation.ValueAnimator
 import android.os.Bundle
+import android.view.View
+import android.view.animation.LinearInterpolator
+import android.view.animation.ScaleAnimation
 import androidx.core.view.isVisible
 import androidx.viewbinding.ViewBinding
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
@@ -14,6 +20,7 @@ import com.sakura.chat.v2.base.component.BaseActivityV2
 import com.sakura.chat.v2.base.dialog.SimpleInputTwoButtonDialog
 import com.sakura.chat.v2.base.dialog.SimpleTwoButtonDialog
 import com.sakura.chat.v2.business.main.res.ChatListItemRes
+import com.sakura.chat.v2.ext.animateScaleLoop
 import com.sakura.chat.v2.ext.toast
 import com.sakura.chat.v2.key.Keys
 
@@ -24,6 +31,7 @@ class MainActivity : BaseActivityV2() {
     private val adapter = MyAdapter()
 
     override fun getContentVB(): ViewBinding = vb
+    private var animator: ValueAnimator? = null
 
     override fun bindData() {
         Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) {
@@ -50,7 +58,7 @@ class MainActivity : BaseActivityV2() {
         updateList()
         vb.rvList.adapter = adapter
 
-        vb.ivAdd.setOnShakeLessClickListener {
+        vb.btnAdd.setOnShakeLessClickListener {
             if (Keys.Net.OPENAI_API_KEY.spValue.isEmpty()) {
                 showAPIKeyInputDialog {
                     ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
@@ -62,9 +70,11 @@ class MainActivity : BaseActivityV2() {
                 return@setOnShakeLessClickListener
             }
             ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
-
         }
+        vb.btnAdd.animateScaleLoop(0.8F, 1200)
+
     }
+
 
     private fun showAPIKeyInputDialog(onSetNewKey: (() -> Unit)? = null) {
         SimpleInputTwoButtonDialog.createWithConfirm(this, "长安粘贴 OPEN AI 的 API KEY") {
