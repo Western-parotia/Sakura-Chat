@@ -18,7 +18,6 @@ import com.sakura.chat.v2.base.component.BaseActivityV2
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.notifyListItemChanged
-import com.sakura.chat.v2.ext.toColorInt
 import com.sakura.chat.v2.ext.toast
 import java.io.File
 
@@ -137,14 +136,13 @@ class ChatActivity : BaseActivityV2() {
             item: ChatMessageHistory
         ) {
             super.convertVB(holder, vb, item)
+            vb.tvMsg.text = item.content
             if (item.role == "user") {
-                vb.tvMsg.text = item.content
-                vb.llRoot.setBackgroundColor(R.color.color_1c1c1e.toColorInt)
-                vb.ivAvatar.setBackgroundResource(R.mipmap.ic_head)
+                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+                vb.ivAvatar.setImageResource(R.mipmap.ic_head)
             } else {
-                vb.tvMsg.text = item.content
-                vb.llRoot.setBackgroundColor(R.color.color_2d2d2f.toColorInt)
-                vb.ivAvatar.setBackgroundResource(R.mipmap.ic_openai_dark)
+                vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
+                vb.ivAvatar.setImageResource(R.mipmap.ic_openai_dark)
             }
         }
     }

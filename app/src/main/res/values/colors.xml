@@ -4,14 +4,18 @@
     <color name="colorPrimaryDark">#2F3B4D</color>
     <color name="colorAccent">#2F3B4D</color>
 
+    <!--线的颜色-->
+    <color name="colorLine">#1C1C1E</color>
+    <!--列表主副色调-->
+    <color name="colorListItemBackground">#2D2D2F</color>
+    <color name="colorListItemBackgroundSub">#1C1C1E</color>
+
+    <!--主色调同类色系的字体颜色-->
+    <color name="colorPrimaryText">#F0F0F0</color>
+
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
     <color name="color_FFFFFF">#FFFFFF</color>
     <color name="color_999999">#999999</color>
-    <color name="color_dddddd">#dddddd</color>
     <color name="color_f0f0f0">#f0f0f0</color>
-    <color name="color_00ff00">#00ff00</color>
-    <color name="color_ffff00">#ffff00</color>
-    <color name="color_2d2d2f">#2D2D2F</color>
-    <color name="color_1c1c1e">#1C1C1E</color>
 </resources>
