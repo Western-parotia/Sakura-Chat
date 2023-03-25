@@ -32,7 +32,7 @@
         android:paddingVertical="@dimen/dp_5">
 
         <ImageView
-            android:src="@mipmap/ic_voice_dark"
+            android:src="@drawable/ic_voice_dark"
             android:id="@+id/iv_change_state"
             android:layout_width="@dimen/dp_48"
             android:layout_height="@dimen/dp_48"

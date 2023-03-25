@@ -117,13 +117,13 @@ class ChatActivity : BaseActivityV2() {
     private fun changeState() {
         isEdit = !isEdit
         if (isEdit) {
-            vb.ivChangeState.setImageResource(R.mipmap.ic_voice_dark)
+            vb.ivChangeState.setImageResource(R.drawable.ic_voice_dark)
             vb.etText.isVisible = true
             vb.tvStartEnd.isVisible = false
             vb.tvCancelAudio.isVisible = false
             stopRecorder()
         } else {
-            vb.ivChangeState.setImageResource(R.mipmap.ic_voice_light)
+            vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
             vb.etText.isVisible = false
             vb.tvStartEnd.isVisible = true
             vb.tvCancelAudio.isVisible = true
@@ -140,11 +140,11 @@ class ChatActivity : BaseActivityV2() {
             if (item.role == "user") {
                 vb.tvMsg.text = item.content
                 vb.llRoot.setBackgroundColor(R.color.color_1c1c1e.toColorInt)
-                vb.ivAvatar.setBackgroundResource(R.mipmap.ic_head)
+                vb.ivAvatar.setBackgroundResource(R.drawable.ic_head)
             } else {
                 vb.tvMsg.text = item.content
                 vb.llRoot.setBackgroundColor(R.color.color_2d2d2f.toColorInt)
-                vb.ivAvatar.setBackgroundResource(R.mipmap.ic_openai_dark)
+                vb.ivAvatar.setBackgroundResource(R.drawable.ic_openai_dark)
             }
         }
     }

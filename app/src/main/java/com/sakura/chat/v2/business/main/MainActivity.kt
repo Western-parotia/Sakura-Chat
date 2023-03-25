@@ -12,7 +12,7 @@ class MainActivity : BaseActivityV2() {
 
     private val vb by lazyVB<ActMainBinding>()
 
-    override fun getContentVB(): ViewBinding = vb
+//    override fun getContentVB(): ViewBinding = vb
 
     override fun bindData() {
 
@@ -24,9 +24,9 @@ class MainActivity : BaseActivityV2() {
 //
 //
 //        }
-        jumpToActivity<ChatActivity> {
-            putExtra("id", /*Keys.SP.newChatId()*/1L)
-        }
-        finish()
+//        jumpToActivity<ChatActivity> {
+//            putExtra("id", /*Keys.SP.newChatId()*/1L)
+//        }
+//        finish()
     }
 }
