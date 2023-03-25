@@ -8,8 +8,10 @@ import com.foundation.service.permission.PermissionBox
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
 import com.foundation.widget.utils.ext.view.hideKeyboard
+import com.foundation.widget.utils.ext.view.jumpToActivity
 import com.foundation.widget.utils.ext.view.setOnShakeLessClickListener
 import com.foundation.widget.utils.ext.view.toUIContext
+import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.R
 import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatBinding
@@ -23,6 +25,14 @@ import java.io.File
 
 class ChatActivity : BaseActivityV2() {
 
+    companion object {
+        fun jump(ui: IUIContext, chatId: Long) {
+            ui.jumpToActivity<ChatActivity> {
+                putExtra("chatId", chatId)
+            }
+        }
+    }
+
     private val vb by lazyVB<ActChatBinding>()
     private val adapter = MyAdapter()
 
@@ -33,7 +43,7 @@ class ChatActivity : BaseActivityV2() {
     private var isEdit = true
 
     @BundleParams("chatId")
-    private val id = 0L
+    private val id = -0L
 
     override fun bindData() {
         vm.newMessage.observe(this) {
@@ -68,25 +78,12 @@ class ChatActivity : BaseActivityV2() {
         }
 
         vb.tvStartEnd.setOnShakeLessClickListener {
-            val r = recorder ?: AudioRecorder()
-            recorder = r
-            when (r.state) {
-                -1, 0 -> {
-                    r.start()
-                    vb.tvStartEnd.text = "点击暂停"
-                }
-                1 -> {
-                    r.pause()
-                    vb.tvStartEnd.text = "点击继续"
-                }
-                else -> {
-                    throw RuntimeException("未知录音错误")
-                }
+            if (recorder == null) {
+                recorder = AudioRecorder().also { it.start() }
+                vb.tvStartEnd.text = "点击取消"
+            } else {
+                stopRecorder()
             }
-        }
-
-        vb.tvCancelAudio.setOnShakeLessClickListener {
-            stopRecorder()
         }
 
         vb.tvSend.setOnShakeLessClickListener {
@@ -119,17 +116,15 @@ class ChatActivity : BaseActivityV2() {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_dark)
             vb.etText.isVisible = true
             vb.tvStartEnd.isVisible = false
-            vb.tvCancelAudio.isVisible = false
             stopRecorder()
         } else {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
             vb.etText.isVisible = false
             vb.tvStartEnd.isVisible = true
-            vb.tvCancelAudio.isVisible = true
         }
     }
 
-    class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
+    private class MyAdapter : ViewBindingQuickAdapter<AdapterChatBinding, ChatMessageHistory>() {
         override fun convertVB(
             holder: ViewBindingViewHolder<AdapterChatBinding>,
             vb: AdapterChatBinding,

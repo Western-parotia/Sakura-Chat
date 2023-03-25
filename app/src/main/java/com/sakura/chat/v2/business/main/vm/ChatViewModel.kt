@@ -2,7 +2,6 @@ package com.sakura.chat.v2.business.main.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.sakura.chat.v2.Keys
 import com.sakura.chat.v2.base.net.AllNetLoadingHandler
 import com.sakura.chat.v2.base.net.BaseViewModel
 import com.sakura.chat.v2.business.main.data.ChatMessage
@@ -10,6 +9,7 @@ import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.data.ChatReq
 import com.sakura.chat.v2.ext.removeIfIterator
 import com.sakura.chat.v2.ext.smartPost
+import com.sakura.chat.v2.key.Keys
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -55,13 +55,13 @@ class ChatViewModel : BaseViewModel() {
     }
 
     fun initDefMessages(chatId: Long) {
-        _newMessage.smartPost(Keys.SP.getChatMessages(chatId))
+        _newMessage.smartPost(Keys.CHAT.getChatMessages(chatId))
     }
 
     private suspend fun talkToGPT(chatId: Long, text: String) {
         val oldText = ChatMessageHistory("user", text, false)
         _newMessage.smartPost(listOf(oldText))
-        val chatMessages = Keys.SP.getChatMessages(chatId).toMutableList()
+        val chatMessages = Keys.CHAT.getChatMessages(chatId).toMutableList()
         chatMessages.add(oldText)
         val chatReq = ChatReq(
             packageNewMessageList() + chatMessages.mapNotNull {
@@ -71,7 +71,7 @@ class ChatViewModel : BaseViewModel() {
                 ) else null
             }
         )
-        Keys.SP.saveChatMessages(chatId, chatMessages)
+        Keys.CHAT.saveChatMessages(chatId, chatMessages)
 
         val chatRes = withBusiness {
             gptApiService.goTalkToGPT(chatReq)
@@ -85,7 +85,7 @@ class ChatViewModel : BaseViewModel() {
         chatMessages.removeIfIterator { it === oldText }
         chatMessages.add(newText)
         chatMessages.add(result)
-        Keys.SP.saveChatMessages(chatId, chatMessages)
+        Keys.CHAT.saveChatMessages(chatId, chatMessages)
     }
 
 
