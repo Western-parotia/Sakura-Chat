@@ -15,7 +15,7 @@
         android:layout_marginRight="@dimen/dp_15"
         android:layout_height="@dimen/dp_28" />
 
-    <com.foundation.widget.shape.ShapeTextView
+    <com.sakura.chat.v2.ext.TypingTextView
         android:id="@+id/tvMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

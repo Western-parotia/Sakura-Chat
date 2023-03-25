@@ -21,7 +21,6 @@ import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
 import com.sakura.chat.v2.business.main.vm.ChatViewModel
 import com.sakura.chat.v2.ext.animateRotateLoop
-import com.sakura.chat.v2.ext.notifyListItemChanged
 import com.sakura.chat.v2.ext.toast
 import java.io.File
 
