@@ -27,7 +27,7 @@
     <LinearLayout
         android:elevation="@dimen/dp_5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_50"
         android:background="@color/colorPrimaryDark"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -37,7 +37,8 @@
             android:id="@+id/iv_change_state"
             android:layout_width="@dimen/dp_30"
             android:layout_height="@dimen/dp_35"
-            android:padding="@dimen/margin_5dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:src="@drawable/ic_voice_dark" />
 
         <EditText
