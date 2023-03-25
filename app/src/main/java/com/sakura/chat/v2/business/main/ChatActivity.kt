@@ -93,13 +93,17 @@ class ChatActivity : BaseActivityV2() {
 
         vb.ivSend.setOnShakeLessClickListener {
             if (vm.isOutMessage.value == true) {
-                "当前聊天消息过多，请开启新的聊天".toast()
+                "累计字数超5w，GPT都麻了，重新建立一个新的聊天吧".toast()
+                return@setOnShakeLessClickListener
+            }
+            if (vm.loadingMessage.value?.role == ChatMessage.LOADING) {
+                "不要着急，GPT还在想上一个问题呢...".toast()
                 return@setOnShakeLessClickListener
             }
             if (isEdit) {
                 val st = vb.etText.text?.toString()?.trim()
                 if (st.isNullOrEmpty()) {
-                    "请输入文本".toast()
+                    "好歹输入个？吧".toast()
                     return@setOnShakeLessClickListener
                 }
                 vb.etText.setText("")
