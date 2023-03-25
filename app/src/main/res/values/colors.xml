@@ -11,7 +11,8 @@
     <color name="colorListItemBackgroundSub">#3E7FA5</color>
 
     <!--主色调同类色系的字体颜色-->
-    <color name="colorPrimaryText">#F0F0F0</color>
+    <color name="colorPrimaryText">#EBEDF2</color>
+    <color name="colorPrimaryDarkText">#EBEDF2</color>
 
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
