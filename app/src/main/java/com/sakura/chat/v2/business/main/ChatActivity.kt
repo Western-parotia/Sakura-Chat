@@ -88,15 +88,7 @@ class ChatActivity : BaseActivityV2() {
                 .setMajorPermission(Manifest.permission.RECORD_AUDIO)
                 .startRequest {
                     changeBottomUI()
-                    if (!isEdit) {
-                        //立即开始录音
-                        changeRecorder()
-                    }
                 }
-        }
-
-        vb.tvStartEnd.setOnShakeLessClickListener {
-            changeRecorder()
         }
 
         vb.ivSend.setOnShakeLessClickListener {
@@ -115,7 +107,7 @@ class ChatActivity : BaseActivityV2() {
                 toUIContext().hideKeyboard()
             } else {
                 val r = recorder
-                stopRecorder()
+                changeBottomUI()
                 if (r?.state == 2) {
                     val file = r.fileDir
                     vm.sendMessageWithVoice(chatId, File(file))
@@ -128,36 +120,24 @@ class ChatActivity : BaseActivityV2() {
     }
 
     /**
-     * 切换录音状态
-     */
-    private fun changeRecorder() {
-        if (recorder == null) {
-            recorder = AudioRecorder().also { it.start() }
-            vb.tvStartEnd.text = "点击取消"
-        } else {
-            stopRecorder()
-        }
-    }
-
-    /**
      * 切换底部样式
      */
     private fun changeBottomUI() {
         isEdit = !isEdit
+        stopRecorder()
         if (isEdit) {
-            vb.ivChangeState.setImageResource(R.drawable.ic_voice_dark)
-            vb.etText.isVisible = true
-            vb.tvStartEnd.isVisible = false
-            stopRecorder()
-        } else {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
+            vb.etText.isVisible = true
+            vb.tvRecording.isVisible = false
+        } else {
+            vb.ivChangeState.setImageResource(R.drawable.ic_close_pink_128)
             vb.etText.isVisible = false
-            vb.tvStartEnd.isVisible = true
+            vb.tvRecording.isVisible = true
+            recorder = AudioRecorder().also { it.start() }
         }
     }
 
     private fun stopRecorder() {
-        vb.tvStartEnd.text = "开始录音"
         recorder?.stop()
         recorder = null
     }

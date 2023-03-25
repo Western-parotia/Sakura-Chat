@@ -1,12 +1,6 @@
 package com.sakura.chat.v2.business.main
 
-import android.animation.Animator
-import android.animation.PropertyValuesHolder
-import android.animation.ValueAnimator
 import android.os.Bundle
-import android.view.View
-import android.view.animation.LinearInterpolator
-import android.view.animation.ScaleAnimation
 import androidx.core.view.isVisible
 import androidx.viewbinding.ViewBinding
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
@@ -32,7 +26,6 @@ class MainActivity : BaseActivityV2() {
     private val adapter = MyAdapter()
 
     override fun getContentVB(): ViewBinding = vb
-    private var animator: ValueAnimator? = null
 
     override fun bindData() {
         Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) { events ->
