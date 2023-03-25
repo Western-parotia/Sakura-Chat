@@ -58,15 +58,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.286" />
 
-        <ImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/ivAdd"
-            android:layout_width="@dimen/dp_80"
-            android:layout_height="@dimen/dp_80"
-            android:layout_marginBottom="@dimen/dp_50"
-            android:padding="@dimen/dp_10"
-            android:src="@drawable/ic_add_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_add_chat"
+            android:layout_marginBottom="@dimen/dp_80" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>

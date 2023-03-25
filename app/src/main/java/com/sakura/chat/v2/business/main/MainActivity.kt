@@ -44,7 +44,6 @@ class MainActivity : BaseActivityV2() {
         updateList()
         vb.rvList.adapter = adapter
 
-
         vb.ivAdd.setOnShakeLessClickListener {
             ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())
         }
@@ -57,9 +56,7 @@ class MainActivity : BaseActivityV2() {
         adapter.setNewData(list)
         val listEmpty = list.isEmpty()
         vb.rvList.isVisible = !listEmpty
-        vb.tvSettingTip.isVisible = listEmpty
         vb.tvAbout.isVisible = listEmpty
-        vb.tvAddTip.isVisible = listEmpty
     }
 
     private class MyAdapter : ViewBindingQuickAdapter<AdapterChatListBinding, ChatListItemRes>() {
