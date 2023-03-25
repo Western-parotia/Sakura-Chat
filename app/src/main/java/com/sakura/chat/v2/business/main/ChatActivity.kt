@@ -78,25 +78,12 @@ class ChatActivity : BaseActivityV2() {
         }
 
         vb.tvStartEnd.setOnShakeLessClickListener {
-            val r = recorder ?: AudioRecorder()
-            recorder = r
-            when (r.state) {
-                -1, 0 -> {
-                    r.start()
-                    vb.tvStartEnd.text = "点击暂停"
-                }
-                1 -> {
-                    r.pause()
-                    vb.tvStartEnd.text = "点击继续"
-                }
-                else -> {
-                    throw RuntimeException("未知录音错误")
-                }
+            if (recorder == null) {
+                recorder = AudioRecorder().also { it.start() }
+                vb.tvStartEnd.text = "点击取消"
+            } else {
+                stopRecorder()
             }
-        }
-
-        vb.tvCancelAudio.setOnShakeLessClickListener {
-            stopRecorder()
         }
 
         vb.tvSend.setOnShakeLessClickListener {
@@ -129,13 +116,11 @@ class ChatActivity : BaseActivityV2() {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_dark)
             vb.etText.isVisible = true
             vb.tvStartEnd.isVisible = false
-            vb.tvCancelAudio.isVisible = false
             stopRecorder()
         } else {
             vb.ivChangeState.setImageResource(R.drawable.ic_voice_light)
             vb.etText.isVisible = false
             vb.tvStartEnd.isVisible = true
-            vb.tvCancelAudio.isVisible = true
         }
     }
 
