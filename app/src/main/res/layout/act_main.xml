@@ -44,49 +44,28 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
-            android:id="@+id/tvSettingTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginEnd="@dimen/dp_15"
-            android:text="①设置来添加你的API Key↑"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dp_20"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
             android:id="@+id/tvAbout"
             android:layout_width="wrap_content"
-            android:gravity="left"
             android:layout_height="wrap_content"
+            android:gravity="left"
             android:text="@string/app_description"
             android:textColor="@color/colorPrimaryDarkText"
             android:textSize="@dimen/dp_15"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvAddTip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="②开始聊天↓"
-            android:layout_marginRight="@dimen/dp_40"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/dp_20"
-            app:layout_constraintBottom_toTopOf="@+id/ivAdd"
-            app:layout_constraintRight_toRightOf="@+id/ivAdd" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.286" />
 
         <ImageView
             android:id="@+id/ivAdd"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
-            android:layout_marginEnd="@dimen/dp_30"
             android:layout_marginBottom="@dimen/dp_50"
             android:padding="@dimen/dp_10"
-            android:src="@drawable/ic_voice_dark"
+            android:src="@drawable/ic_add_chat"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
