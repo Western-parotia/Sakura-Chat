@@ -7,6 +7,7 @@ import android.view.View
 import android.view.animation.*
 import androidx.appcompat.widget.AppCompatTextView
 import java.lang.Integer.min
+import java.time.Duration
 
 fun View.animateScaleLoop(
     scale: Float,
@@ -37,8 +38,8 @@ fun View.animateRotateLoop(
         fromDegrees, toDegrees, Animation.RELATIVE_TO_SELF,
         0.5F, Animation.RELATIVE_TO_SELF, 0.5F
     )
-    animation.repeatCount = ScaleAnimation.INFINITE
     animation.duration = duration
+    animation.repeatCount = ScaleAnimation.INFINITE
     animation.repeatMode = ScaleAnimation.INFINITE
     animation.interpolator = LinearInterpolator()
     if (start) {
@@ -59,7 +60,13 @@ class TypingAnimationTextView(context: Context, attr: AttributeSet) :
     var typingAnimation: ObjectAnimator? = null
 }
 
-fun TypingAnimationTextView.animateTyping(text: String) {
+fun TypingAnimationTextView.animateTyping(
+    text: String,
+    loop: Boolean = false,
+    startIndex: Int = 0,
+    speed: Int = 100,
+    maxDuration: Int = 10000
+) {
     typingAnimation?.let {
         if (it.isRunning) {
             it.cancel()
@@ -67,12 +74,20 @@ fun TypingAnimationTextView.animateTyping(text: String) {
     }
     stagingText = text
     val indexSize = stagingText.length - 1
+    val duration = min(maxDuration, stagingText.length * speed).toLong()
     val evaluator = TypeEvaluator<Int> { fraction, startValue, endValue ->
         val result = startValue + (fraction * (endValue - startValue)).toInt()
         result
     }
-    val animator = ObjectAnimator.ofObject(this, "textIndex", evaluator, 0, 100, indexSize)
-    animator.interpolator = AccelerateInterpolator(2F)
-    animator.duration = 10000L
+    val animator = ObjectAnimator.ofObject(
+        this, "textIndex", evaluator, startIndex, indexSize
+    )
+    animator.duration = duration
+    if (loop) {
+        animator.repeatCount = ObjectAnimator.INFINITE
+        animator.repeatMode = ObjectAnimator.RESTART
+    } else {
+        animator.interpolator = AccelerateInterpolator(1.3F)
+    }
     animator.start()
 }
