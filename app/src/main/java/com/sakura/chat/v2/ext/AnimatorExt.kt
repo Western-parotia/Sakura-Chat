@@ -2,12 +2,9 @@ package com.sakura.chat.v2.ext
 
 import android.animation.*
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.*
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import java.lang.Integer.min
 
@@ -50,48 +47,32 @@ fun View.animateRotateLoop(
     return animation
 }
 
-//fun TextView.animateTyping(text: CharSequence, duration: Long = 2000L) {
-//    var progress = 0
-//    val animator = ValueAnimator.ofInt(0, text.length).apply {
-//        this.duration = duration
-//
-//        addUpdateListener { valueAnimator ->
-//            val value = valueAnimator.animatedValue as Int
-//            progress = value
-//            setText(text.subSequence(0, value))
-//        }
-//        addListener(object : AnimatorListenerAdapter() {
-//            override fun onAnimationEnd(animation: Animator?) {
-//
-//                Handler(Looper.getMainLooper()).postDelayed({
-//                    start()
-//                }, 800L)
-//            }
-//        })
-//    }
-//    animator.start()
-//}
 
+class TypingAnimationTextView(context: Context, attr: AttributeSet) :
+    AppCompatTextView(context, attr) {
 
-class TypingTextView(context: Context, attr: AttributeSet) : AppCompatTextView(context, attr) {
-    var myText = "1"
+    var stagingText: String = ""
+    var textIndex = 0
         set(value) {
-            setText(value)
+            setText(stagingText.subSequence(0, value))
         }
+    var typingAnimation: ObjectAnimator? = null
 }
 
-fun TypingTextView.animateTyping(text: String) {
-    val array: Array<String> = text.map {
-        it.toString()
-    }.toTypedArray()
-
-    val evaluator = TypeEvaluator<String> { fraction, startValue, endValue ->
-        val starIndex = getText().length
-        val endIndex = min((starIndex + 1), (text.length))
-        text.substring(0, endIndex)
+fun TypingAnimationTextView.animateTyping(text: String) {
+    typingAnimation?.let {
+        if (it.isRunning) {
+            it.cancel()
+        }
     }
-    val animator = ObjectAnimator.ofObject(this, "myText", evaluator, *array)
-    animator.interpolator = AccelerateDecelerateInterpolator()
-    animator.duration = 2000L
+    stagingText = text
+    val indexSize = stagingText.length - 1
+    val evaluator = TypeEvaluator<Int> { fraction, startValue, endValue ->
+        val result = startValue + (fraction * (endValue - startValue)).toInt()
+        result
+    }
+    val animator = ObjectAnimator.ofObject(this, "textIndex", evaluator, 0, 100, indexSize)
+    animator.interpolator = AccelerateInterpolator(2F)
+    animator.duration = 10000L
     animator.start()
 }
