@@ -9,11 +9,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="actionMenuTextColor">@color/color_FFFFFF</item>
         <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Small</item>
-        <item name="android:windowBackground">@drawable/bg_app_window</item>
         <!--        状态栏白色-->
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <!--        状态栏字体黑色-->
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         <item name="android:windowNoTitle">true</item>
     </style>
+
+    <style name="startup_window" parent="BaseTheme">
+        <item name="android:windowBackground">@drawable/bg_app_window</item>
+    </style>
+
+    <style name="UITheme" parent="BaseTheme">
+        <item name="android:windowBackground">#0000</item>
+    </style>
+
+
 </resources>
