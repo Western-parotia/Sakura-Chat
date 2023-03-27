@@ -29,7 +29,7 @@ class TestActivity : BaseActivityV2() {
                         "正在录音...      正在录音...      正在录音...      " +
                         "正在录音...      " +
                         "" +
-                        "", loop = true
+                        "", loop = false
             )
 
         }
