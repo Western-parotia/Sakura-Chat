@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.sakura.chat.v2.ext.TypingAnimationTextView
+        <TextView
             android:id="@+id/tat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

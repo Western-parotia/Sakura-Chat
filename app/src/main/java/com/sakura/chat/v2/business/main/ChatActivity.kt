@@ -37,7 +37,7 @@ class ChatActivity : BaseActivityV2() {
     }
 
     private val vb by lazyVB<ActChatBinding>()
-    private val adapter = ChatDetailAdapter()
+    private val adapter = ChatDetailAdapter(lifecycle)
 
     private val vm by lazyActivityVM<ChatViewModel>()
 

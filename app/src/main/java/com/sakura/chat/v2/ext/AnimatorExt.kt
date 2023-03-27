@@ -5,7 +5,14 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.*
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.animation.doOnEnd
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import com.sakura.chat.R
 import java.lang.Integer.min
 import java.time.Duration
 
@@ -48,7 +55,57 @@ fun View.animateRotateLoop(
     return animation
 }
 
+fun TextView.typingAnimation(
+    lifecycle: Lifecycle,
+    text: String,
+    startIndex: Int = 0,
+    loop: Boolean = false,
+    maxDuration: Int = 10000,
+    speed: Int = 200
+) {
+    val duration = min(maxDuration, text.length * speed).toLong()
+    //取消上一个动画
+    val animator =
+        getTag(R.id.typing_animation_id_1) as? ObjectAnimator
+            ?: ObjectAnimator.ofInt(
+                startIndex,
+                startIndex, text.length - 1
+            )
+    animator.setIntValues(startIndex, text.length - 1)
+    setTag(R.id.typing_animation_id_1, animator)
+    animator.duration = duration
+    if (loop) {
+        animator.repeatCount = ObjectAnimator.INFINITE
+        animator.repeatMode = ObjectAnimator.RESTART
+    } else {
+        animator.interpolator = AccelerateInterpolator(1.3F)
+    }
+    animator.addUpdateListener {
+        val value = it.animatedValue as Int
+//        println("typeAnimaValue:$value")
+        setText(text.subSequence(0, value))
+    }
+    val observer = object : LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        fun onPause() {
+            if (animator.isRunning) {
+                animator.pause()
+            }
+        }
 
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        fun onResume() {
+            animator.resume()
+        }
+    }
+    animator.doOnEnd {
+        lifecycle.removeObserver(observer)
+    }
+    lifecycle.addObserver(observer)
+    animator.start()
+}
+
+//下面是动态修改自定义控制进度fraction的例子
 class TypingAnimationTextView(context: Context, attr: AttributeSet) :
     AppCompatTextView(context, attr) {
 
@@ -60,7 +117,7 @@ class TypingAnimationTextView(context: Context, attr: AttributeSet) :
     var typingAnimation: ObjectAnimator? = null
 }
 
-fun TypingAnimationTextView.animateTyping(
+fun TypingAnimationTextView.typing(
     text: String,
     loop: Boolean = false,
     startIndex: Int = 0,
@@ -77,6 +134,7 @@ fun TypingAnimationTextView.animateTyping(
     val duration = min(maxDuration, stagingText.length * speed).toLong()
     val evaluator = TypeEvaluator<Int> { fraction, startValue, endValue ->
         val result = startValue + (fraction * (endValue - startValue)).toInt()
+        println("result:$result")
         result
     }
     val animator = ObjectAnimator.ofObject(

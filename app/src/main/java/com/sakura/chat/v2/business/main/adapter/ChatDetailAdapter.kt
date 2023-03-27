@@ -1,13 +1,15 @@
 package com.sakura.chat.v2.business.main.adapter
 
+import androidx.lifecycle.Lifecycle
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingMultiItemAdapter
 import com.sakura.chat.R
 import com.sakura.chat.databinding.AdapterChatBinding
 import com.sakura.chat.v2.business.main.data.ChatMessage
 import com.sakura.chat.v2.business.main.data.ChatMessageHistory
-import com.sakura.chat.v2.ext.animateTyping
+import com.sakura.chat.v2.ext.typingAnimation
 
-class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
+class ChatDetailAdapter(val lifecycle: Lifecycle) :
+    ViewBindingMultiItemAdapter<ChatMessageHistory>() {
     init {
         //如果是最新的回复 isFresh=true，且是最后一条，且是GPT的 则播放逐字动画
         addMultipleItemBuild<AdapterChatBinding>().setIsThisTypeCallback { adapter, position, item ->
@@ -17,7 +19,7 @@ class ChatDetailAdapter : ViewBindingMultiItemAdapter<ChatMessageHistory>() {
         }.setOnBindListViewHolderCallback { _, _, vb, item ->
             vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
             vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
-            vb.tvMsg.animateTyping(item.content)
+            vb.tvMsg.typingAnimation(lifecycle, item.content)
         }.build()
 
         addDefaultMultipleItem<AdapterChatBinding> { _, _, vb, item ->
