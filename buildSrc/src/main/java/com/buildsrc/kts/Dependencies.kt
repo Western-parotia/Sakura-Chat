@@ -26,7 +26,7 @@ object Dependencies {
     }
 
     object Foundation {
-        const val activityFragment = "com.foundation.app:activity-fragment:1.1.0"
+        const val activityFragment = "com.foundation.app:activity-fragment:1.1.1"
         const val net = "com.foundation.service:net:1.0.6"
         const val loadingView = "com.foundation.widget:loadingview:1.5.0"
         const val recyclerviewAdapter =

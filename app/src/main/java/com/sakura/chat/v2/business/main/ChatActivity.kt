@@ -36,7 +36,7 @@ class ChatActivity : BaseActivityV2() {
         }
     }
 
-    private val vb by lazyVB<ActChatBinding>()
+    private val vb by lazyAndSetRoot<ActChatBinding>()
     private val adapter = ChatDetailAdapter(lifecycle)
 
     private val vm by lazyActivityVM<ChatViewModel>()
@@ -84,8 +84,6 @@ class ChatActivity : BaseActivityV2() {
         vb.tvContent.text = data.content
         return vb.root
     }
-
-    override fun getContentVB() = vb
 
     override fun init(savedInstanceState: Bundle?) {
         vb.toolBar.text = "聊天（Id:$chatId）"

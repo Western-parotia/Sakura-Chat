@@ -2,7 +2,6 @@ package com.sakura.chat.v2.business.main
 
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.viewbinding.ViewBinding
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingQuickAdapter
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingViewHolder
 import com.foundation.widget.utils.ext.view.setOnItemShakeLessClickListener
@@ -21,11 +20,9 @@ import com.sakura.chat.v2.key.Keys
 
 class MainActivity : BaseActivityV2() {
 
-    private val vb by lazyVB<ActMainBinding>()
+    private val vb by lazyAndSetRoot<ActMainBinding>()
 
     private val adapter = MyAdapter()
-
-    override fun getContentVB(): ViewBinding = vb
 
     override fun bindData() {
         Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) { events ->
