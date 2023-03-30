@@ -86,7 +86,7 @@ class ChatActivity : BaseActivityV2() {
     }
 
     override fun init(savedInstanceState: Bundle?) {
-        vb.toolBar.text = "<chat_No:$chatId>"
+        vb.toolBar.text = "<chat_No:$chatId>"
 
         vm.initDefMessages(chatId)
         vb.rvList.adapter = adapter
