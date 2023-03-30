@@ -2,12 +2,14 @@ package com.sakura.chat.v2.base.component
 
 import android.os.Bundle
 import android.view.WindowManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import com.foundation.app.arc.activity.BaseFragmentManagerActivity
 import com.foundation.widget.loading.IPageLoading
 import com.foundation.widget.loading.PageLoadingAdapter
 import com.foundation.widget.utils.other.MjPage
 import com.foundation.widget.utils.other.StatusBarUtils
+import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.v2.base.loading.LoadingEventHelper
 import com.sakura.chat.v2.base.loading.LoadingProgress
 import com.sakura.chat.v2.base.loading.NormalLoadingAdapter
@@ -17,7 +19,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 /**
  * create by zhusw on 6/7/21 15:24
  */
-abstract class BaseActivityV2 : BaseFragmentManagerActivity() {
+abstract class BaseActivityV2 : BaseFragmentManagerActivity(), IUIContext {
     override fun initViewModel() {
     }
 
@@ -198,5 +200,18 @@ abstract class BaseActivityV2 : BaseFragmentManagerActivity() {
         page: MjPage
     ) {
         LoadingEventHelper.bindPageEvent(this, initLiveData, loadMoreLiveData, page)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // UiContext实现
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    override val currentFragmentManager get() = supportFragmentManager
+    override val delegate get() = this
+    override val isFinished get() = isFinishing
+    override val rootView get() = window?.decorView
+    override fun getActivity() = this
+    override fun requireViewLifecycle() = lifecycle
+    override fun viewLifecycleWithCallback(run: (Lifecycle?) -> Unit) {
+        run.invoke(lifecycle)
     }
 }
