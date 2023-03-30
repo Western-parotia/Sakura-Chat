@@ -13,6 +13,7 @@ import com.sakura.chat.v2.base.component.BaseActivityV2
 import com.sakura.chat.v2.base.dialog.SimpleInputTwoButtonDialog
 import com.sakura.chat.v2.base.dialog.SimpleTwoButtonDialog
 import com.sakura.chat.v2.business.main.res.ChatListItemRes
+import com.sakura.chat.v2.business.main.vm.MainViewModel
 import com.sakura.chat.v2.ext.animateScaleLoop
 import com.sakura.chat.v2.ext.toast
 import com.sakura.chat.v2.key.ChatChangedState
@@ -21,18 +22,27 @@ import com.sakura.chat.v2.key.Keys
 class MainActivity : BaseActivityV2() {
 
     private val vb by lazyAndSetRoot<ActMainBinding>()
+    private val vm by lazyActivityVM<MainViewModel>()
 
     private val adapter = MyAdapter()
 
     override fun bindData() {
         Keys.MessageBusKey.CHAT_CHANGED.getObserver().observeOnActive(this) { events ->
             //除了数据变更，其他的都刷新列表
-            val shouldRefresh =
-                events.any { it.state != ChatChangedState.UPDATE }
+            val shouldRefresh = events.any { it.state != ChatChangedState.UPDATE }
             if (shouldRefresh) {
-                updateList()
+                vm.loadNewList()
             }
         }
+
+        vm.chatListRes.observe(this) {
+            adapter.setNewData(it)
+            val listEmpty = it.isEmpty()
+            vb.rvList.isVisible = !listEmpty
+            vb.tvAbout.isVisible = listEmpty
+        }
+
+        vm.loadNewList()
     }
 
     override fun init(savedInstanceState: Bundle?) {
@@ -50,17 +60,14 @@ class MainActivity : BaseActivityV2() {
         adapter.setOnItemLongClickListener { _, _, position ->
             val data = adapter.data[position]
             val tip = data.firstMsg.let { if (it.length > 10) it.substring(0, 10) else it }
-            SimpleTwoButtonDialog(
-                this,
+            SimpleTwoButtonDialog(this,
                 content = "是否要删除id:${data.chatId},标题:${tip},这条聊天？",
                 confirm = "删除",
                 onConfirm = {
                     Keys.CHAT.removeChatMessages(data.chatId)
-                })
-                .show()
+                }).show()
             true
         }
-        updateList()
         vb.rvList.adapter = adapter
 
         vb.btnAdd.setOnShakeLessClickListener {
@@ -87,16 +94,6 @@ class MainActivity : BaseActivityV2() {
             "API KEY 更新成功".toast()
             onSetNewKey?.invoke()
         }.show()
-    }
-
-    private fun updateList() {
-        val list = Keys.CHAT.chatDataIds.spValue.map {
-            ChatListItemRes(it, Keys.CHAT.getChatMessages(it).firstOrNull()?.content ?: "无消息")
-        }
-        adapter.setNewData(list)
-        val listEmpty = list.isEmpty()
-        vb.rvList.isVisible = !listEmpty
-        vb.tvAbout.isVisible = listEmpty
     }
 
     private class MyAdapter : ViewBindingQuickAdapter<AdapterChatListBinding, ChatListItemRes>() {

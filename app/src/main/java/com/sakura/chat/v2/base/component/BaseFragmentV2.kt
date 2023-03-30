@@ -1,11 +1,15 @@
 package com.sakura.chat.v2.base.component
 
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import com.foundation.app.arc.fragment.BaseViewBinding2Fragment
 import com.foundation.widget.loading.IPageLoading
 import com.foundation.widget.loading.PageLoadingAdapter
+import com.foundation.widget.utils.ext.observeOnce
 import com.foundation.widget.utils.other.MjPage
+import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.v2.base.loading.LoadingEventHelper
 import com.sakura.chat.v2.base.loading.LoadingProgress
 import com.sakura.chat.v2.base.loading.NormalLoadingAdapter
@@ -16,7 +20,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
  *
  *create by zhusw on 5/18/21 18:38
  */
-abstract class BaseFragmentV2(@LayoutRes id: Int) : BaseViewBinding2Fragment(id) {
+abstract class BaseFragmentV2(@LayoutRes id: Int) : BaseViewBinding2Fragment(id), IUIContext {
     override fun initViewModel() {
 
     }
@@ -172,5 +176,19 @@ abstract class BaseFragmentV2(@LayoutRes id: Int) : BaseViewBinding2Fragment(id)
         page: MjPage
     ) {
         LoadingEventHelper.bindPageEvent(this, initLiveData, loadMoreLiveData, page)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    // UiContext实现
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    override val currentFragmentManager get() = childFragmentManager
+    override val delegate get() = this
+    override val isFinished get() = !isAdded
+    override val rootView get() = view
+    override fun requireViewLifecycle() = viewLifecycleOwner.lifecycle
+    override fun viewLifecycleWithCallback(run: (Lifecycle?) -> Unit) {
+        viewLifecycleOwnerLiveData.observeOnce(this) { owner: LifecycleOwner? ->
+            run.invoke(owner?.lifecycle)
+        }
     }
 }

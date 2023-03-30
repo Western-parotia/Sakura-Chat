@@ -31,6 +31,7 @@
         android:layout_marginLeft="@dimen/dp_10"
         android:layout_height="wrap_content"
         android:textColor="@color/colorPrimaryText"
+        android:textIsSelectable="true"
         android:textSize="@dimen/dp_14"
         tools:text="你好" />
 
