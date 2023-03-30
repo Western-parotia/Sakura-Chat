@@ -92,8 +92,7 @@ class ChatActivity : BaseActivityV2() {
         vb.rvList.adapter = adapter
 
         vb.ivChangeState.setOnShakeLessClickListener {
-            PermissionBox.with(this)
-                .setMajorPermission(Manifest.permission.RECORD_AUDIO)
+            PermissionBox.with(toUIContext()).setMajorPermission(Manifest.permission.RECORD_AUDIO)
                 .startRequest {
                     changeBottomUI()
                 }
@@ -116,7 +115,6 @@ class ChatActivity : BaseActivityV2() {
                 }
                 vb.etText.setText("")
                 vm.sendMessageWithText(chatId, st)
-                toUIContext().hideKeyboard()
             } else {
                 val r = recorder
                 changeBottomUI()
@@ -126,8 +124,8 @@ class ChatActivity : BaseActivityV2() {
                 } else {
                     "请先开始录音".toast()
                 }
-                toUIContext().hideKeyboard()
             }
+            hideKeyboard()
         }
     }
 
@@ -146,6 +144,7 @@ class ChatActivity : BaseActivityV2() {
             vb.etText.isVisible = false
             vb.clRecording.isVisible = true
             recorder = AudioRecorder().also { it.start() }
+            hideKeyboard()
             postMainDelayedLifecycle(this, 300, run = recordingRun)
         }
     }
