@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:background="@color/colorListItemBackground"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -49,12 +49,12 @@
             android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:foregroundTint="@color/colorAccent"
-            android:hint="请输入文本"
+            android:hint="开始与GPT聊天..."
             android:maxLength="10000"
             android:maxLines="14"
+            android:textColorHint="@color/colorPrimaryDarkText"
             android:textColor="@color/colorPrimaryText"
-            android:textColorHint="@color/colorPrimaryText"
+            android:backgroundTint="@color/colorPrimaryDarkText"
             android:textSize="@dimen/dp_14" />
 
         <com.foundation.widget.shape.ShapeConstraintLayout

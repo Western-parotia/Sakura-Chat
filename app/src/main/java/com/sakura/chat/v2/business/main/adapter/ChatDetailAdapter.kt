@@ -18,7 +18,7 @@ class ChatDetailAdapter(val lifecycle: Lifecycle) :
                     && item.role == ChatMessage.ROLE_ASSISTANT
         }.setOnBindListViewHolderCallback { _, _, vb, item ->
             vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
-            vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+            vb.llRoot.setBackgroundResource(R.drawable.sp_chat_item_item_bg_bot)
             vb.tvMsg.typingAnimation(lifecycle, item.content)
         }.build()
 
@@ -26,10 +26,10 @@ class ChatDetailAdapter(val lifecycle: Lifecycle) :
             vb.tvMsg.text = item.content
             if (item.role == ChatMessage.ROLE_USER) {
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_sakura_flower)
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackgroundSub)
+                vb.llRoot.setBackgroundResource(R.drawable.sp_chat_item_item_bg_user)
             } else {
                 vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
-                vb.llRoot.setBackgroundResource(R.color.colorListItemBackground)
+                vb.llRoot.setBackgroundResource(R.drawable.sp_chat_item_item_bg_bot)
             }
         }
 

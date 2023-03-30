@@ -24,5 +24,9 @@
         <item name="android:windowBackground">#0000</item>
     </style>
 
+    <style name="chatEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:colorControlActivated">@color/colorPrimaryText</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+    </style>
 
 </resources>
