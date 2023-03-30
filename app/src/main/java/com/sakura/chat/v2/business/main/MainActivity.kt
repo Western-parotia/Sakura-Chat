@@ -70,8 +70,8 @@ class MainActivity : BaseActivityV2() {
                 }
                 return@setOnShakeLessClickListener
             }
-            if (adapter.data.size > 100) {
-                "本地缓存条数过多，请先删除无用的记录再开启新聊天吧".toast()
+            if (adapter.data.size > 1000) {
+                "会话超1000了，删几个吧不然手机容易扛不住啊".toast()
                 return@setOnShakeLessClickListener
             }
             ChatActivity.jump(toUIContext(), Keys.CHAT.newChatId())

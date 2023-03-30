@@ -92,10 +92,11 @@
         android:theme="@style/UITheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:appComponentFactory,android:allowBackup">
-
+<!--        android:process=":aaa"-->
         <activity
             android:name="com.sakura.chat.v2.business.main.MainActivity"
             android:exported="true"
+            android:multiprocess="true"
             android:hardwareAccelerated="true"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
@@ -115,10 +116,10 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/startup_window">
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+            <!--                        <intent-filter>-->
+            <!--                            <action android:name="android.intent.action.MAIN" />-->
+            <!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--                        </intent-filter>-->
         </activity>
     </application>
 
