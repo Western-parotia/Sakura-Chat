@@ -106,7 +106,7 @@ class MainActivity : BaseActivityV2() {
             item: ChatListItemRes
         ) {
             super.convertVB(holder, vb, item)
-            vb.tvTitle.text = "Id:${item.chatId}"
+            vb.tvTitle.text = "<chat_No:${item.chatId}>"
             vb.tvFirstMsg.text = item.firstMsg
         }
     }
