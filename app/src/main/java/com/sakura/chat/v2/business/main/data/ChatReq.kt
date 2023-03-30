@@ -30,5 +30,5 @@ data class ChatMessage(val role: String = "", val content: String = "") {
 data class ChatMessageHistory(
     val role: String,
     val content: String,
-    val isFresh: Boolean = false
+    var isFresh: Boolean = false
 )

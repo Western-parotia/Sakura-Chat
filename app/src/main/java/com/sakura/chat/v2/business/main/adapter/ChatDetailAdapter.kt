@@ -20,6 +20,7 @@ class ChatDetailAdapter(val lifecycle: Lifecycle) :
             vb.ivAvatar.setImageResource(R.drawable.ic_chat_gpt)
             vb.llRoot.setBackgroundResource(R.drawable.sp_chat_item_item_bg_bot)
             vb.tvMsg.typingAnimation(lifecycle, item.content)
+            item.isFresh = false
         }.build()
 
         addDefaultMultipleItem<AdapterChatBinding> { _, _, vb, item ->
