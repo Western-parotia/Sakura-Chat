@@ -1,4 +1,4 @@
-package com.sakura.chat.core.base.net
+package com.sakura.chat.core.net
 
 import androidx.annotation.CallSuper
 import com.foundation.service.net.state.NetException

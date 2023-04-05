@@ -3,8 +3,8 @@ package com.sakura.chat.ui.vm
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundation.widget.utils.ext.smartPost
-import com.sakura.chat.core.base.net.AllNetLoadingHandler
-import com.sakura.chat.core.base.net.BaseViewModel
+import com.sakura.chat.core.net.AllNetLoadingHandler
+import com.sakura.chat.core.net.BaseViewModel
 import com.sakura.chat.ui.data.ChatMessage
 import com.sakura.chat.ui.data.ChatMessageHistory
 import com.sakura.chat.ui.data.ChatReq

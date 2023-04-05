@@ -1,4 +1,4 @@
-package com.sakura.chat.core.base.net
+package com.sakura.chat.core.net
 
 import com.foundation.service.net.NetRC.withResponse
 import retrofit2.Response

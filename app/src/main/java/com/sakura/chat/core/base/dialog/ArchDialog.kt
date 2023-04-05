@@ -15,7 +15,7 @@ import com.sakura.chat.R
 import com.sakura.chat.core.ArchConfig
 import com.sakura.chat.core.base.loading.LoadingEventHelper
 import com.sakura.chat.core.base.loading.NormalLoadingAdapter
-import com.sakura.chat.core.base.net.BaseViewModel
+import com.sakura.chat.core.net.BaseViewModel
 
 /**
  * create by zhusw on 8/2/21 14:43

@@ -1,4 +1,4 @@
-package com.sakura.chat.core.base.net
+package com.sakura.chat.core.net
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

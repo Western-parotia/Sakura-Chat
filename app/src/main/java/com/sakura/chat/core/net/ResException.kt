@@ -1,6 +1,6 @@
-package com.sakura.chat.core.base.net
+package com.sakura.chat.core.net
 
-import com.sakura.chat.core.base.net.ResException.Companion.HTTP_ERROR
+import com.sakura.chat.core.net.ResException.Companion.HTTP_ERROR
 
 /**
  * create by zhusw on 5/24/21 20:20

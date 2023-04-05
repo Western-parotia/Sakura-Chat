@@ -13,7 +13,7 @@ import com.foundation.widget.utils.ui.IUIContext
 import com.sakura.chat.core.base.loading.LoadingEventHelper
 import com.sakura.chat.core.base.loading.LoadingProgress
 import com.sakura.chat.core.base.loading.NormalLoadingAdapter
-import com.sakura.chat.core.base.net.BaseViewModel
+import com.sakura.chat.core.net.BaseViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**

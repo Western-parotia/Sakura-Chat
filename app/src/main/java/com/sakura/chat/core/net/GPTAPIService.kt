@@ -1,4 +1,4 @@
-package com.sakura.chat.core.base.net
+package com.sakura.chat.core.net
 
 import com.sakura.chat.ui.data.ChatReq
 import com.sakura.chat.ui.data.ChatRes
