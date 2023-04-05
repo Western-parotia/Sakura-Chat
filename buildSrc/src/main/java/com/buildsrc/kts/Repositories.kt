@@ -17,13 +17,12 @@ object Repositories {
     private const val flutter = "https://storage.googleapis.com/download.flutter.io"
 
     internal const val aliyunReleaseAndArtifacts =
-        "https://packages.aliyun.com/maven/repository/2097827-release-UquW0x/"
-    internal const val aliyunSnapshotAndArtifacts =
-        "https://packages.aliyun.com/maven/repository/2097827-snapshot-uMDdUx/"
+        "https://packages.aliyun.com/maven/repository/2196753-release-jjUEtd/"
+
 
     //公共账号密码，只可用于拉取
-    private const val aliyunMjDefName = "632a761fe39d7932770f41cf"
-    private const val aliyunMjDefPassword = "obLVJ9r]Cx8["
+    private const val aliyunMjDefName = "642b9f209f62bf75b33fc1ae"
+    private const val aliyunMjDefPassword = "EkNR7ao]bCHh"
 
     internal const val codingMjMaven =
         "https://mijukeji-maven.pkg.coding.net/repository/jileiku/base_maven/"
@@ -48,11 +47,6 @@ object Repositories {
             maven(flutter)
             mavenPassword(
                 aliyunReleaseAndArtifacts,
-                aliyunMjDefName,
-                aliyunMjDefPassword
-            )
-            mavenPassword(
-                aliyunSnapshotAndArtifacts,
                 aliyunMjDefName,
                 aliyunMjDefPassword
             )
