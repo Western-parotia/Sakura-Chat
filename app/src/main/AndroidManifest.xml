@@ -94,7 +94,7 @@
         tools:replace="android:appComponentFactory,android:allowBackup">
 <!--        android:process=":aaa"-->
         <activity
-            android:name="com.sakura.chat.v2.business.main.MainActivity"
+            android:name="com.sakura.chat.ui.MainActivity"
             android:exported="true"
             android:multiprocess="true"
             android:hardwareAccelerated="true"
@@ -108,11 +108,11 @@
         </activity>
 
         <activity
-            android:name="com.sakura.chat.v2.business.main.ChatActivity"
+            android:name="com.sakura.chat.ui.ChatActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name="com.sakura.chat.v2.business.main.TestActivity"
+            android:name="com.sakura.chat.ui.TestActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/startup_window">

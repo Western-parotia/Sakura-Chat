@@ -42,7 +42,7 @@
             android:layout_height="wrap_content" />
     </LinearLayout>
 
-    <com.sakura.chat.v2.business.main.EventView
+    <com.sakura.chat.ui.EventView
         android:id="@+id/eventView"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"

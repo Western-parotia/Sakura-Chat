@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.foundation.app.arc.utils.ext.lazyAtomic
 import com.foundation.service.net.NetManager
 import com.sakura.chat.BuildConfig
-import com.sakura.chat.net.RetrofitFactory
+import com.sakura.chat.core.net.RetrofitFactory
 
 /**
  * create by zhusw on 6/7/21 14:16
