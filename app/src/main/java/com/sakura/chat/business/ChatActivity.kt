@@ -1,4 +1,4 @@
-package com.sakura.chat.ui
+package com.sakura.chat.business
 
 import android.Manifest
 import android.os.Bundle
@@ -15,18 +15,18 @@ import com.sakura.chat.R
 import com.sakura.chat.databinding.ActChatBinding
 import com.sakura.chat.databinding.AdapterChatLoadingBinding
 import com.sakura.chat.utils.AudioRecorder
-import com.sakura.chat.core.base.component.BaseActivityV2
-import com.sakura.chat.ui.adapter.ChatDetailAdapter
-import com.sakura.chat.ui.data.ChatMessage
-import com.sakura.chat.ui.data.ChatMessageHistory
-import com.sakura.chat.ui.vm.ChatViewModel
+import com.sakura.chat.core.base.component.BaseActivity
+import com.sakura.chat.business.adapter.ChatDetailAdapter
+import com.sakura.chat.business.data.ChatMessage
+import com.sakura.chat.business.data.ChatMessageHistory
+import com.sakura.chat.business.vm.ChatViewModel
 import com.sakura.chat.utils.ext.animateRotateLoop
 import com.sakura.chat.utils.ext.postMainDelayedLifecycle
 import com.sakura.chat.utils.ext.removeGlobalRunnable
 import com.sakura.chat.utils.ext.toast
 import java.io.File
 
-class ChatActivity : BaseActivityV2() {
+class ChatActivity : BaseActivity() {
 
     companion object {
         fun jump(ui: IUIContext, chatId: Long) {

@@ -1,8 +1,8 @@
 package com.sakura.chat.core.net
 
-import com.sakura.chat.ui.data.ChatReq
-import com.sakura.chat.ui.data.ChatRes
-import com.sakura.chat.ui.data.VoiceRes
+import com.sakura.chat.business.data.ChatReq
+import com.sakura.chat.business.data.ChatRes
+import com.sakura.chat.business.data.VoiceRes
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*

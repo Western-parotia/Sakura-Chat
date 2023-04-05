@@ -17,9 +17,9 @@ import com.sakura.chat.core.net.BaseViewModel
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
- * create by zhusw on 6/7/21 15:24
+ * create by zhusw on 3/18/22 18:38
  */
-abstract class BaseActivityV2 : BaseFragmentManagerActivity(), IUIContext {
+abstract class BaseActivity : BaseFragmentManagerActivity(), IUIContext {
     override fun initViewModel() {
     }
 

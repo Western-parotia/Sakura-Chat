@@ -1,4 +1,4 @@
-package com.sakura.chat.ui
+package com.sakura.chat.business
 
 import android.content.Context
 import android.content.Intent
@@ -8,10 +8,10 @@ import android.view.MotionEvent
 import android.widget.LinearLayout
 import androidx.viewbinding.ViewBinding
 import com.sakura.chat.databinding.ActTestBinding
-import com.sakura.chat.core.base.component.BaseActivityV2
+import com.sakura.chat.core.base.component.BaseActivity
 import com.sakura.chat.utils.ext.typingAnimation
 
-class TestActivity : BaseActivityV2() {
+class TestActivity : BaseActivity() {
     private val vb by lazyVB<ActTestBinding>()
     override fun getContentVB(): ViewBinding? {
         return null

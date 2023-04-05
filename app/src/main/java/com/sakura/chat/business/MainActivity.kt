@@ -1,4 +1,4 @@
-package com.sakura.chat.ui
+package com.sakura.chat.business
 
 import android.os.Bundle
 import androidx.core.view.isVisible
@@ -9,17 +9,17 @@ import com.foundation.widget.utils.ext.view.setOnShakeLessClickListener
 import com.foundation.widget.utils.ext.view.toUIContext
 import com.sakura.chat.databinding.ActMainBinding
 import com.sakura.chat.databinding.AdapterChatListBinding
-import com.sakura.chat.core.base.component.BaseActivityV2
+import com.sakura.chat.core.base.component.BaseActivity
 import com.sakura.chat.core.base.dialog.SimpleInputTwoButtonDialog
 import com.sakura.chat.core.base.dialog.SimpleTwoButtonDialog
-import com.sakura.chat.ui.res.ChatListItemRes
-import com.sakura.chat.ui.vm.MainViewModel
+import com.sakura.chat.business.res.ChatListItemRes
+import com.sakura.chat.business.vm.MainViewModel
 import com.sakura.chat.utils.ext.animateScaleLoop
 import com.sakura.chat.utils.ext.toast
 import com.sakura.chat.key.ChatChangedState
 import com.sakura.chat.key.Keys
 
-class MainActivity : BaseActivityV2() {
+class MainActivity : BaseActivity() {
 
     private val vb by lazyAndSetRoot<ActMainBinding>()
     private val vm by lazyActivityVM<MainViewModel>()

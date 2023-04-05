@@ -4,7 +4,7 @@ import com.foundation.service.messagebus.MessageBusData
 import com.foundation.service.sp.MjSpUtils
 import com.foundation.service.sp.SpList
 import com.foundation.service.sp.SpString
-import com.sakura.chat.ui.data.ChatMessageHistory
+import com.sakura.chat.business.data.ChatMessageHistory
 
 object Keys {
     object MessageBusKey {

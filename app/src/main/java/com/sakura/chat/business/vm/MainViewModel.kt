@@ -1,10 +1,10 @@
-package com.sakura.chat.ui.vm
+package com.sakura.chat.business.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundation.widget.utils.ext.smartPost
 import com.sakura.chat.core.net.BaseViewModel
-import com.sakura.chat.ui.res.ChatListItemRes
+import com.sakura.chat.business.res.ChatListItemRes
 import com.sakura.chat.key.Keys
 
 class MainViewModel : BaseViewModel() {

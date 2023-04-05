@@ -1,11 +1,11 @@
-package com.sakura.chat.ui.adapter
+package com.sakura.chat.business.adapter
 
 import androidx.lifecycle.Lifecycle
 import com.foundation.widget.crvadapter.viewbinding.ViewBindingMultiItemAdapter
 import com.sakura.chat.R
 import com.sakura.chat.databinding.AdapterChatBinding
-import com.sakura.chat.ui.data.ChatMessage
-import com.sakura.chat.ui.data.ChatMessageHistory
+import com.sakura.chat.business.data.ChatMessage
+import com.sakura.chat.business.data.ChatMessageHistory
 import com.sakura.chat.utils.ext.typingAnimation
 
 class ChatDetailAdapter(val lifecycle: Lifecycle) :

@@ -1,4 +1,4 @@
-package com.sakura.chat.ui
+package com.sakura.chat.business
 
 import androidx.activity.ComponentActivity
 import com.sakura.chat.databinding.DialogAboutBinding

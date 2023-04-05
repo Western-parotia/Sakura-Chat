@@ -1,13 +1,13 @@
-package com.sakura.chat.ui.vm
+package com.sakura.chat.business.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.foundation.widget.utils.ext.smartPost
 import com.sakura.chat.core.net.AllNetLoadingHandler
 import com.sakura.chat.core.net.BaseViewModel
-import com.sakura.chat.ui.data.ChatMessage
-import com.sakura.chat.ui.data.ChatMessageHistory
-import com.sakura.chat.ui.data.ChatReq
+import com.sakura.chat.business.data.ChatMessage
+import com.sakura.chat.business.data.ChatMessageHistory
+import com.sakura.chat.business.data.ChatReq
 import com.sakura.chat.key.Keys
 import okhttp3.MediaType
 import okhttp3.MultipartBody

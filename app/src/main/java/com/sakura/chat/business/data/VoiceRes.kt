@@ -1,4 +1,4 @@
-package com.sakura.chat.ui.data
+package com.sakura.chat.business.data
 
 data class VoiceRes(val text: String = "") {
 }

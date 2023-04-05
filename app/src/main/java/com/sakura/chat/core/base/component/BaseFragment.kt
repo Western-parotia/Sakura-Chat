@@ -18,15 +18,15 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 
 /**
  *
- *create by zhusw on 5/18/21 18:38
+ * create by zhusw on 3/18/22 18:38
  */
-abstract class BaseFragmentV2(@LayoutRes id: Int) : BaseViewBinding2Fragment(id), IUIContext {
+abstract class BaseFragment(@LayoutRes id: Int) : BaseViewBinding2Fragment(id), IUIContext {
     override fun initViewModel() {
 
     }
 
     /**
-     * 注意：如果涉及嵌套fragment，父类必须仍是[BaseFragmentV2]，不能混用BaseProgressFragmentWrap的
+     * 注意：如果涉及嵌套fragment，父类必须仍是[BaseFragment]，不能混用BaseProgressFragmentWrap的
      */
     override fun onVisible(isFirst: Boolean) {
 
